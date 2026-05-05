@@ -12,6 +12,7 @@ import {
   getTranslations,
   setRequestLocale,
 } from "next-intl/server";
+import { Toaster } from "sonner";
 
 type Props = {
   children: React.ReactNode;
@@ -141,6 +142,7 @@ export default async function LocaleLayout({
           <DirectionProvider direction={dir || "ltr"}>
             <NextIntlClientProvider messages={messages}>
               {children}
+              <Toaster richColors position="bottom-right" />
             </NextIntlClientProvider>
           </DirectionProvider>
         </ThemeProvider>
