@@ -14,5 +14,9 @@ export function LanguageToggle() {
     router.replace("/", { locale: nextLocale });
   };
 
-  return <Button onClick={switchLocale}>{nextLocale.toUpperCase()}</Button>;
+  return (
+    <Button size="icon" onClick={switchLocale}>
+      {nextLocale.toUpperCase()}
+    </Button>
+  );
 }
