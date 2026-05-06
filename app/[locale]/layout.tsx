@@ -145,9 +145,9 @@ export default async function LocaleLayout({
               <header className="sticky top-0 z-50 w-full">
                 <Navbar />
               </header>
-              <div className="mx-auto flex max-w-5xl flex-1 px-4 py-8">
+              <main className="mx-auto flex w-full max-w-7xl flex-1 overflow-hidden px-4 py-8">
                 {children}
-              </div>
+              </main>
               <Toaster richColors position="bottom-right" />
             </NextIntlClientProvider>
           </DirectionProvider>
