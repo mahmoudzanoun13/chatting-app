@@ -24,5 +24,11 @@
     "title": "Page not found",
     "description": "We couldn't find what you were looking for. Please check and try again.",
     "go_home": "Go Back Home"
+  },
+  "error": {
+    "title": "Something went wrong!",
+    "description": "An unexpected error has occurred. Our team has been notified.",
+    "try_again": "Try again",
+    "go_home": "Go Back Home"
   }
 }
