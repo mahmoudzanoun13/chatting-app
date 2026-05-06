@@ -19,5 +19,10 @@
       "theme": "Theme",
       "toggle_menu": "Toggle menu"
     }
+  },
+  "not_found": {
+    "title": "Page not found",
+    "description": "We couldn't find what you were looking for. Please check and try again.",
+    "go_home": "Go Back Home"
   }
 }
