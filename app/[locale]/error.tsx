@@ -32,7 +32,7 @@ export default function Error({
         <Button
           onClick={() => reset()}
           size="sm"
-          className="cursor-pointer hover:opacity-70"
+          className="cursor-pointer transition-opacity duration-300 hover:opacity-70"
         >
           {t("try_again")}
         </Button>
