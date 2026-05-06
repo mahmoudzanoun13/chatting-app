@@ -3,5 +3,21 @@
     "title": "Chatting App",
     "description": "This is chatting app",
     "name": "Mahmoud Zanoun"
+  },
+  "navbar": {
+    "links": {
+      "chat": "Chat",
+      "about": "About"
+    },
+    "auth": {
+      "sign_in": "Sign in",
+      "sign_up": "Get Started"
+    },
+    "settings": {
+      "settings": "Settings",
+      "language": "Language",
+      "theme": "Theme",
+      "toggle_menu": "Toggle menu"
+    }
   }
 }

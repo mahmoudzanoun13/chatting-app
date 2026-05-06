@@ -3,5 +3,21 @@
     "title": "تطبيق محادثة",
     "description": "هذا هو تطبيق محادثة",
     "name": "محمود زنون"
+  },
+  "navbar": {
+    "links": {
+      "chat": "محادثة",
+      "about": "حول"
+    },
+    "auth": {
+      "sign_in": "تسجيل الدخول",
+      "sign_up": "ابدأ"
+    },
+    "settings": {
+      "settings": "الإعدادات",
+      "language": "اللغة",
+      "theme": "المظهر",
+      "toggle_menu": "تبديل القائمة"
+    }
   }
 }
