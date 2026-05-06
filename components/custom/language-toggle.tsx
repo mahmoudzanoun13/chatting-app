@@ -15,7 +15,11 @@ export function LanguageToggle() {
   };
 
   return (
-    <Button size="icon" onClick={switchLocale}>
+    <Button
+      size="icon"
+      onClick={switchLocale}
+      className="cursor-pointer transition-opacity duration-300 hover:opacity-70"
+    >
       {nextLocale.toUpperCase()}
     </Button>
   );
