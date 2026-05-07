@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 
 const startsWithArabic = /^\s*[\u0600-\u06FF]/;
 
@@ -8,7 +9,7 @@ type MessageItemProps = {
   className?: string;
 };
 
-export default function MessageItem({
+const MessageItem = memo(function MessageItem({
   text,
   sender,
   className,
@@ -27,6 +28,8 @@ export default function MessageItem({
       </p>
     </div>
   );
-}
+});
 
 MessageItem.displayName = "MessageItem";
+
+export default MessageItem;

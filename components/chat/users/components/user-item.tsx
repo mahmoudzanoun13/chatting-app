@@ -4,12 +4,13 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User } from "lucide-react";
 import { type ChatUser } from "../users-list";
 import { Link } from "@/i18n/navigation";
+import { memo } from "react";
 
 interface UserItemProps {
   user: ChatUser;
 }
 
-export default function UserItem({ user }: UserItemProps) {
+const UserItem = memo(function UserItem({ user }: UserItemProps) {
   return (
     <Link
       href={`/chat/${user.id}`}
@@ -23,6 +24,8 @@ export default function UserItem({ user }: UserItemProps) {
       <span className="font-bold">{user.name}</span>
     </Link>
   );
-}
+});
 
 UserItem.displayName = "UserItem";
+
+export default UserItem;
