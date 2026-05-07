@@ -5,6 +5,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
+import { UserNav } from "./user-nav";
 import { useTranslations } from "next-intl";
 
 const links = [
@@ -33,18 +34,9 @@ export function Navbar() {
               {t(`links.${link.label}`)}
             </Link>
           ))}
-          <Link
-            href="/login"
-            className={cn(
-              buttonVariants({ variant: "ghost", size: "sm" }),
-              pathname === "/login" &&
-                "text-primary underline underline-offset-4",
-            )}
-          >
-            {t("auth.sign_in")}
-          </Link>
         </div>
-        <div className="hidden md:inline-flex">
+        <div className="hidden md:inline-flex items-center gap-4">
+          <UserNav />
           <Link
             href="/signup"
             className={cn(buttonVariants({ size: "sm" }), "rounded-full")}

@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MessageSquare, Users as UsersIcon } from "lucide-react";
 import { MessagesList } from "@/components/messages/messages-list";
+import { UsersList } from "@/components/users/users-list";
 
 interface BoxProps {
   title: string;
@@ -31,7 +32,7 @@ export default async function IndexPage() {
   return (
     <section className="h-full w-full">
       {/* Mobile View: Tabs */}
-      <div className="flex h-[calc(100vh-178px)] flex-col lg:hidden">
+      <div className="flex h-[calc(100vh-192px)] flex-col lg:hidden">
         <Tabs defaultValue="messages" className="flex h-full flex-col gap-4">
           <TabsList className="grid w-full grid-cols-2 rounded-full border bg-card shadow-sm">
             <TabsTrigger
@@ -62,16 +63,14 @@ export default async function IndexPage() {
             className="h-[calc(100%-80px)] outline-none"
           >
             <ContentBox title={t("users")} Icon={UsersIcon}>
-              <p className="text-muted-foreground italic">
-                Online users will appear here...
-              </p>
+              <UsersList />
             </ContentBox>
           </TabsContent>
         </Tabs>
       </div>
 
       {/* Desktop View: Grid */}
-      <div className="hidden h-[calc(100vh-178px)] grid-cols-4 gap-6 lg:grid">
+      <div className="hidden h-[calc(100vh-192px)] grid-cols-4 gap-6 lg:grid">
         <div className="h-full lg:col-span-3">
           <ContentBox title={t("title")} Icon={MessageSquare}>
             <MessagesList />
@@ -79,9 +78,7 @@ export default async function IndexPage() {
         </div>
         <div className="h-full">
           <ContentBox title={t("users")} Icon={UsersIcon}>
-            <p className="text-muted-foreground italic">
-              Online users will appear here...
-            </p>
+            <UsersList />
           </ContentBox>
         </div>
       </div>
