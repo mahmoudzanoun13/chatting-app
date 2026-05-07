@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MessageSquare, Users as UsersIcon } from "lucide-react";
+import { MessagesList } from "@/components/messages/messages-list";
 
 interface BoxProps {
   title: string;
@@ -13,14 +14,12 @@ function ContentBox({ title, children, Icon }: BoxProps) {
   return (
     <div className="flex h-full flex-col rounded-[2.5rem] border bg-card p-2 shadow-sm">
       <div className="flex flex-1 flex-col rounded-[2rem] bg-muted/50 p-6">
-        <div className="pb-4">
-          <div className="flex items-center gap-2">
-            <Icon className="size-5 text-primary" />
-            <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-          </div>
-          <Separator className="mt-4" />
+        <div className="flex items-center gap-2">
+          <Icon className="size-5 text-primary" />
+          <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
         </div>
-        <div className="mt-2 flex-1 overflow-y-auto">{children}</div>
+        <Separator className="mt-4" />
+        <div className="flex-1 overflow-y-auto">{children}</div>
       </div>
     </div>
   );
@@ -55,9 +54,7 @@ export default async function IndexPage() {
             className="h-[calc(100%-80px)] outline-none"
           >
             <ContentBox title={t("title")} Icon={MessageSquare}>
-              <p className="text-muted-foreground italic">
-                Select a conversation to start chatting...
-              </p>
+              <MessagesList />
             </ContentBox>
           </TabsContent>
           <TabsContent
@@ -77,9 +74,7 @@ export default async function IndexPage() {
       <div className="hidden h-[calc(100vh-178px)] grid-cols-4 gap-6 lg:grid">
         <div className="h-full lg:col-span-3">
           <ContentBox title={t("title")} Icon={MessageSquare}>
-            <p className="text-muted-foreground italic">
-              Select a conversation to start chatting...
-            </p>
+            <MessagesList />
           </ContentBox>
         </div>
         <div className="h-full">
