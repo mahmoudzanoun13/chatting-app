@@ -106,7 +106,7 @@ export function MessagesList() {
 
       <div
         ref={containerRef}
-        className="flex flex-col gap-2 overflow-y-auto py-4 pr-2"
+        className="flex flex-col gap-2 overflow-y-auto py-4 pe-2"
       >
         {messages.map((message) => (
           <MessageItem

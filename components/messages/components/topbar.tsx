@@ -9,7 +9,7 @@ type TopBarProps = {
 
 export default function TopBar({ messages }: TopBarProps) {
   return (
-    <div className="flex items-center justify-between py-2 mb-auto">
+    <div dir="ltr" className="flex items-center justify-between py-2 mb-auto">
       <div className="flex items-center gap-2">
         <Avatar className="size-8">
           <AvatarFallback>
