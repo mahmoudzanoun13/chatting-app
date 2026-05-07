@@ -33,15 +33,8 @@ export default async function IndexPage() {
     <section className="h-full w-full">
       {/* Mobile View: Tabs */}
       <div className="flex h-[calc(100vh-192px)] flex-col lg:hidden">
-        <Tabs defaultValue="messages" className="flex h-full flex-col gap-4">
+        <Tabs defaultValue="users" className="flex h-full flex-col gap-4">
           <TabsList className="grid w-full grid-cols-2 rounded-full border bg-card shadow-sm">
-            <TabsTrigger
-              value="messages"
-              className="rounded-full data-active:bg-primary data-active:text-primary-foreground data-active:shadow-md"
-            >
-              <MessageSquare className="size-4" />
-              {t("title")}
-            </TabsTrigger>
             <TabsTrigger
               value="users"
               className="rounded-full data-active:bg-primary data-active:text-primary-foreground data-active:shadow-md"
@@ -49,15 +42,14 @@ export default async function IndexPage() {
               <UsersIcon className="size-4" />
               {t("users")}
             </TabsTrigger>
+            <TabsTrigger
+              value="messages"
+              className="rounded-full data-active:bg-primary data-active:text-primary-foreground data-active:shadow-md"
+            >
+              <MessageSquare className="size-4" />
+              {t("title")}
+            </TabsTrigger>
           </TabsList>
-          <TabsContent
-            value="messages"
-            className="h-[calc(100%-80px)] outline-none"
-          >
-            <ContentBox title={t("title")} Icon={MessageSquare}>
-              <MessagesList />
-            </ContentBox>
-          </TabsContent>
           <TabsContent
             value="users"
             className="h-[calc(100%-80px)] outline-none"
@@ -66,19 +58,27 @@ export default async function IndexPage() {
               <UsersList />
             </ContentBox>
           </TabsContent>
+          <TabsContent
+            value="messages"
+            className="h-[calc(100%-80px)] outline-none"
+          >
+            <ContentBox title={t("title")} Icon={MessageSquare}>
+              <MessagesList />
+            </ContentBox>
+          </TabsContent>
         </Tabs>
       </div>
 
       {/* Desktop View: Grid */}
       <div className="hidden h-[calc(100vh-192px)] grid-cols-4 gap-6 lg:grid">
-        <div className="h-full lg:col-span-3">
-          <ContentBox title={t("title")} Icon={MessageSquare}>
-            <MessagesList />
-          </ContentBox>
-        </div>
         <div className="h-full">
           <ContentBox title={t("users")} Icon={UsersIcon}>
             <UsersList />
+          </ContentBox>
+        </div>
+        <div className="h-full lg:col-span-3">
+          <ContentBox title={t("title")} Icon={MessageSquare}>
+            <MessagesList />
           </ContentBox>
         </div>
       </div>
