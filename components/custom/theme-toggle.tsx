@@ -33,7 +33,7 @@ export function ModeToggle() {
           </button>
         }
       />
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           {t("light")}
         </DropdownMenuItem>
