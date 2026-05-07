@@ -8,6 +8,7 @@ interface LogoProps {
 export function Logo({ onClose }: LogoProps) {
   return (
     <Link
+      dir="ltr"
       href="/chat"
       onClick={onClose}
       className="flex items-center gap-2 group"
@@ -19,7 +20,7 @@ export function Logo({ onClose }: LogoProps) {
         dir="ltr"
         className="flex items-center text-xl font-bold tracking-tight"
       >
-        Chatting<span className="text-primary ml-1">App</span>
+        Chatting<span className="text-primary">App</span>
       </span>
     </Link>
   );
