@@ -21,7 +21,7 @@ export default async function ChatLayout({
             </ContentBox>
           }
           messages={
-            <ContentBox title={t("title")} Icon={MessageSquare}>
+            <ContentBox title={t("title")} Icon={MessageSquare} titleTag="h1">
               {children}
             </ContentBox>
           }
@@ -38,7 +38,7 @@ export default async function ChatLayout({
           </ContentBox>
         </div>
         <div className="h-full lg:col-span-3">
-          <ContentBox title={t("title")} Icon={MessageSquare}>
+          <ContentBox title={t("title")} Icon={MessageSquare} titleTag="h1">
             {children}
           </ContentBox>
         </div>
