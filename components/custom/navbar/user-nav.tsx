@@ -23,7 +23,10 @@ export function UserNav() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <button className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:bg-muted p-1 rounded-full border bg-background shadow-sm outline-none">
+          <button
+            aria-label={t("settings.user_menu")}
+            className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:bg-muted p-1 rounded-full border bg-background shadow-sm outline-none"
+          >
             <Avatar className="size-8 border">
               <AvatarFallback className="bg-primary/10 text-primary">
                 <User className="size-4" />

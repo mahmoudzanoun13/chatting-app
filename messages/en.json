@@ -20,7 +20,8 @@
       "toggle_menu": "Toggle menu",
       "light": "Light",
       "dark": "Dark",
-      "system": "System"
+      "system": "System",
+      "user_menu": "User menu"
     }
   },
   "not_found": {
@@ -39,6 +40,8 @@
     "users": "Users",
     "type_message": "Type a message...",
     "close_chat": "Close Chat",
-    "no_messages": "No messages yet..."
+    "no_messages": "No messages yet...",
+    "more_options": "More options",
+    "send": "Send"
   }
 }

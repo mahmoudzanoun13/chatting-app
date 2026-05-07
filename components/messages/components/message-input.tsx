@@ -17,6 +17,7 @@ export default function MessageInput() {
       />
       <Button
         size="icon"
+        aria-label={t("send")}
         className="rounded-full size-10 cursor-pointer transition-opacity duration-300 hover:opacity-70"
       >
         <Send className="size-4" />

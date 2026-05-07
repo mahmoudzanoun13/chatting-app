@@ -19,6 +19,7 @@ export default function ChatDropdown() {
       <DropdownMenuTrigger
         render={
           <button
+            aria-label={t("more_options")}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "cursor-pointer",
