@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,9 +18,14 @@ export default function ChatDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant="ghost" className="cursor-pointer">
+          <button
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "cursor-pointer",
+            )}
+          >
             <MoreVertical />
-          </Button>
+          </button>
         }
       />
       <DropdownMenuContent className="w-40" align="end">
