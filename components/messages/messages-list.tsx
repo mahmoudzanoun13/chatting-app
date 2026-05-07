@@ -88,7 +88,7 @@ export function MessagesList() {
 
   if (messages?.length === 0) {
     return (
-      <div className="flex flex-col h-full w-full justify-end max-h-[calc(100vh-340px)] lg:max-h-[calc(100vh-317px)]">
+      <div className="flex flex-col h-full w-full justify-end max-h-[calc(100vh-357px)] lg:max-h-[calc(100vh-317px)]">
         <TopBar messages={messages} />
         <div className="flex flex-col h-full w-full items-center justify-center gap-2">
           <p className="text-sm font-semibold">{t("no_messages")}</p>
@@ -101,7 +101,7 @@ export function MessagesList() {
   }
 
   return (
-    <div className="flex flex-col h-full w-full justify-end max-h-[calc(100vh-340px)] lg:max-h-[calc(100vh-317px)]">
+    <div className="flex flex-col h-full w-full justify-end max-h-[calc(100vh-357px)] lg:max-h-[calc(100vh-317px)]">
       <TopBar messages={messages} />
 
       <div
