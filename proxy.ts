@@ -1,8 +1,15 @@
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export default function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  
+  // If the user visits the root of a locale, redirect to /chat
+  if (pathname === '/en' || pathname === '/ar') {
+    return NextResponse.redirect(new URL(`${pathname}/chat`, request.url));
+  }
+
   const handleMiddleware = createMiddleware(routing);
   return handleMiddleware(request);
 }

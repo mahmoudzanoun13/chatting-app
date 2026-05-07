@@ -7,7 +7,7 @@ interface LogoProps {
 export function Logo({ onClose }: LogoProps) {
   return (
     <Link
-      href="/"
+      href="/chat"
       onClick={onClose}
       className="flex items-center hover:scale-105"
     >

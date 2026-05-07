@@ -42,6 +42,7 @@
     "close_chat": "إغلاق المحادثة",
     "no_messages": "لا توجد رسائل بعد...",
     "more_options": "خيارات إضافية",
-    "send": "إرسال"
+    "send": "إرسال",
+    "select_conversation": "اختر محادثة..."
   }
 }

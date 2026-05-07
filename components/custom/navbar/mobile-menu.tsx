@@ -21,7 +21,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User, Globe, Moon, Sun } from "lucide-react";
 
 const links = [
-  { label: "chat", href: "/" },
+  { label: "chat", href: "/chat" },
   { label: "about", href: "/about" },
 ];
 
@@ -76,21 +76,25 @@ export function MobileMenu() {
             </div>
 
             <div className="flex flex-col gap-1">
-              {links.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    buttonVariants({ variant: "ghost", size: "sm" }),
-                    "h-10 justify-start rounded-xl px-3",
-                    pathname === link.href &&
-                      "bg-accent text-primary font-semibold",
-                  )}
-                >
-                  {t(`links.${link.label}`)}
-                </Link>
-              ))}
+              {links.map((link) => {
+                const isActive =
+                  pathname === link.href ||
+                  (link.href === "/chat" && pathname.startsWith("/chat/"));
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      buttonVariants({ variant: "ghost", size: "sm" }),
+                      "h-10 justify-start rounded-xl px-3",
+                      isActive && "bg-accent text-primary font-semibold",
+                    )}
+                  >
+                    {t(`links.${link.label}`)}
+                  </Link>
+                );
+              })}
             </div>
 
             <Separator className="my-4" />

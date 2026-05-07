@@ -17,7 +17,7 @@ export default async function NotFoundPage() {
       </div>
 
       <div className="flex flex-col items-center justify-center gap-2 md:flex-row">
-        <Link href="/" className={buttonVariants({ size: "sm" })}>
+        <Link href="/chat" className={buttonVariants({ size: "sm" })}>
           {t("go_home")}
         </Link>
       </div>

@@ -1,12 +1,11 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { User } from "lucide-react";
+import UserItem from "./components/user-item";
 
-type User = {
+export type ChatUser = {
   id: string;
   name: string;
 };
 
-const users: User[] = [
+const users: ChatUser[] = [
   {
     id: "1",
     name: "User 1",
@@ -92,16 +91,9 @@ const users: User[] = [
 export async function UsersList() {
   return (
     <div className="flex flex-col h-full w-full max-h-[calc(100vh-357px)] lg:max-h-[calc(100vh-317px)]">
-      <div className="flex flex-col gap-4 overflow-y-auto py-4 pe-2">
+      <div className="flex flex-col gap-2 overflow-y-auto py-4 pe-2">
         {users.map((user) => (
-          <div key={user.id} className="flex items-center gap-2">
-            <Avatar className="size-8">
-              <AvatarFallback>
-                <User className="size-4" />
-              </AvatarFallback>
-            </Avatar>
-            <span className="font-bold">{user.name}</span>
-          </div>
+          <UserItem key={user.id} user={user} />
         ))}
       </div>
     </div>

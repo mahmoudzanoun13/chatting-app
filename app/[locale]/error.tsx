@@ -37,7 +37,7 @@ export default function Error({
           {t("try_again")}
         </Button>
         <Link
-          href="/"
+          href="/chat"
           className={buttonVariants({ variant: "outline", size: "sm" })}
         >
           {t("go_home")}

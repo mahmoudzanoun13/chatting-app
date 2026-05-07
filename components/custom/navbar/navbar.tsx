@@ -9,7 +9,7 @@ import { UserNav } from "./user-nav";
 import { useTranslations } from "next-intl";
 
 const links = [
-  { label: "chat", href: "/" },
+  { label: "chat", href: "/chat" },
   { label: "about", href: "/about" },
 ];
 
@@ -21,19 +21,23 @@ export function Navbar() {
       <div className="mx-auto flex max-w-xl items-center justify-between space-x-4 rounded-full border bg-background p-1.5 ps-4 pe-4 md:pe-0">
         <Logo />
         <div className="hidden md:inline-flex">
-          {links.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={cn(
-                buttonVariants({ variant: "ghost", size: "sm" }),
-                pathname === link.href &&
-                  "text-primary underline underline-offset-4",
-              )}
-            >
-              {t(`links.${link.label}`)}
-            </Link>
-          ))}
+          {links.map((link) => {
+            const isActive =
+              pathname === link.href ||
+              (link.href === "/chat" && pathname.startsWith("/chat/"));
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "sm" }),
+                  isActive && "text-primary underline underline-offset-4",
+                )}
+              >
+                {t(`links.${link.label}`)}
+              </Link>
+            );
+          })}
         </div>
         <div className="hidden md:inline-flex items-center gap-4">
           <UserNav />

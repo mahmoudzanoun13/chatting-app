@@ -42,6 +42,7 @@
     "close_chat": "Close Chat",
     "no_messages": "No messages yet...",
     "more_options": "More options",
-    "send": "Send"
+    "send": "Send",
+    "select_conversation": "Select a conversation..."
   }
 }
