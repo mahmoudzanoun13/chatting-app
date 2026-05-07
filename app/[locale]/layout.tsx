@@ -84,13 +84,9 @@ export async function generateMetadata({
       },
     },
     icons: {
-      icon: "/favicon.ico",
-      shortcut: "/favicon.ico",
-      apple: "/favicon.ico",
-      other: [
-        { rel: "icon", url: "/favicon.ico" },
-        { rel: "icon", type: "image/png", url: "/favicon.png" },
-      ],
+      icon: "/icon.svg",
+      shortcut: "/icon.svg",
+      apple: "/icon.svg",
     },
     applicationName: t("title"),
     other: {

@@ -53,14 +53,14 @@ export function MobileMenu() {
             </Button>
           }
         />
-        <SheetContent className="flex flex-col gap-0 px-4">
-          <SheetHeader className="pb-6 pt-2">
+        <SheetContent className="flex flex-col gap-0">
+          <SheetHeader className="pb-6 pt-2 px-4">
             <SheetTitle>
               <Logo onClose={() => setOpen(false)} />
             </SheetTitle>
           </SheetHeader>
 
-          <div className="flex flex-col gap-1 overflow-y-auto pr-2">
+          <div className="flex flex-col gap-1 overflow-y-auto pr-2 px-4">
             <div className="mb-4 flex items-center gap-3 rounded-2xl bg-muted/50 p-3">
               <Avatar className="size-10 border">
                 <AvatarFallback className="bg-primary/10 text-primary">
