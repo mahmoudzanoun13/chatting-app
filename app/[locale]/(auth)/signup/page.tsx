@@ -1,9 +1,5 @@
 import SignupForm from "@/components/auth/components/signup-form";
 
 export default function SignupPage() {
-  return (
-    <section className="flex flex-col w-full items-center justify-center gap-10 py-10 md:min-h-[calc(100vh-192px)]">
-      <SignupForm />
-    </section>
-  );
+  return <SignupForm />;
 }
