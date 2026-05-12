@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
 export default function LoginForm() {
   const currentYear = new Date().getFullYear();
@@ -60,14 +61,23 @@ export default function LoginForm() {
             Login with Google
           </Button>
         </form>
-        <div className="flex flex-col gap-4 text-sm">
+        <div className="flex flex-col text-sm">
           <p>
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="underline">
+            Don&apos;t have an account?
+            <Link
+              href="/signup"
+              className={cn(buttonVariants({ variant: "link" }), "p-0.5")}
+            >
               Sign up
             </Link>
           </p>
-          <Link href="/forgot-password" className="underline">
+          <Link
+            href="/forgot-password"
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "self-start p-0",
+            )}
+          >
             Forgot your password?
           </Link>
         </div>

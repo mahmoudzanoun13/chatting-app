@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
 export default function SignupForm() {
   const currentYear = new Date().getFullYear();
@@ -86,8 +87,11 @@ export default function SignupForm() {
           </Button>
         </form>
         <p className="text-sm">
-          Already have an account?{" "}
-          <Link href="/login" className="underline">
+          Already have an account?
+          <Link
+            href="/login"
+            className={cn(buttonVariants({ variant: "link" }), "p-0.5")}
+          >
             Login
           </Link>
         </p>

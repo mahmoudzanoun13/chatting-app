@@ -45,7 +45,10 @@ export default function ResetPassword({ nextStep }: ResetPasswordProps) {
       </form>
       <p className="text-sm">
         ← Back to
-        <Link href="/login" className={cn(buttonVariants({ variant: "link" }))}>
+        <Link
+          href="/login"
+          className={cn(buttonVariants({ variant: "link" }), "p-0.5")}
+        >
           Login
         </Link>
       </p>
