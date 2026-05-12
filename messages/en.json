@@ -77,7 +77,17 @@
     "set_new_password": "Set New Password",
     "password_updated_successfully": "Password Updated Successfully",
     "password_updated_successfully_description": "Your password has been updated successfully. You can now log in with your new password.",
-    "click_here_to_login_with_your_new_password": "Click here to login with your new password"
+    "click_here_to_login_with_your_new_password": "Click here to login with your new password",
+    "validations": {
+      "full_name_min": "Full name must be at least {min} characters long.",
+      "full_name_max": "Full name must be at most {max} characters long.",
+      "invalid_email": "Email must be a valid email address.",
+      "password_min": "Password must be at least {min} characters long.",
+      "password_max": "Password must be at most {max} characters long.",
+      "confirm_password_min": "Confirm password must be at least {min} characters long.",
+      "confirm_password_max": "Confirm password must be at most {max} characters long.",
+      "passwords_do_not_match": "Passwords do not match."
+    }
   },
   "about": {
     "title": "About ChattingApp",

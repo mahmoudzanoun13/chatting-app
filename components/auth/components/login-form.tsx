@@ -2,14 +2,32 @@
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import createLoginSchema, {
+  CreateLoginSchema,
+} from "@/components/auth/schemas/login-schema";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 export default function LoginForm() {
   const t = useTranslations("auth");
+  const validationT = useTranslations("auth.validations");
+
+  const form = useForm<CreateLoginSchema>({
+    resolver: zodResolver(createLoginSchema(validationT)),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(data: CreateLoginSchema) {
+    console.log(data);
+  }
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-6 rounded-lg border bg-background p-6">
@@ -19,27 +37,48 @@ export default function LoginForm() {
           {t("enter_your_details_below_to_login")}
         </p>
       </div>
-      <form className="grid gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="email">{t("email")}</Label>
-          <Input
-            required
-            id="email"
-            type="email"
-            autoComplete="username"
-            placeholder="team@chatting-app.com"
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">{t("password")}</Label>
-          <Input
-            required
-            id="password"
-            type="password"
-            placeholder="••••••••"
-            autoComplete="current-password"
-          />
-        </div>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        autoComplete="on"
+        noValidate
+        className="grid gap-4"
+      >
+        <Controller
+          name="email"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="email">{t("email")}</FieldLabel>
+              <Input
+                {...field}
+                id="email"
+                type="email"
+                aria-invalid={fieldState.invalid}
+                placeholder="team@chatting-app.com"
+                autoComplete="email"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="password"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
+              <Input
+                {...field}
+                id="password"
+                type="password"
+                aria-invalid={fieldState.invalid}
+                placeholder="••••••••"
+                autoComplete="current-password"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         <Button
           type="submit"
           className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"

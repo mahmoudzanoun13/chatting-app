@@ -77,7 +77,17 @@
     "set_new_password": "تعيين كلمة مرور جديدة",
     "password_updated_successfully": "تم تحديث كلمة المرور بنجاح",
     "password_updated_successfully_description": "تم تحديث كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.",
-    "click_here_to_login_with_your_new_password": "انقر هنا لتسجيل الدخول باستخدام كلمة المرور الجديدة"
+    "click_here_to_login_with_your_new_password": "انقر هنا لتسجيل الدخول باستخدام كلمة المرور الجديدة",
+    "validations": {
+      "full_name_min": "الاسم الكامل يجب أن يكون على الأقل {min} أحرف.",
+      "full_name_max": "الاسم الكامل يجب أن يكون على الأكثر {max} حرفًا.",
+      "invalid_email": "البريد الإلكتروني غير صحيح",
+      "password_min": "كلمة المرور يجب أن تكون على الأقل {min} أحرف.",
+      "password_max": "كلمة المرور يجب أن تكون على الأكثر {max} حرفًا.",
+      "confirm_password_min": "كلمة المرور المؤكدة يجب أن تكون على الأقل {min} أحرف.",
+      "confirm_password_max": "كلمة المرور المؤكدة يجب أن تكون على الأكثر {max} حرفًا.",
+      "passwords_do_not_match": "كلمة المرور وتأكيد كلمة المرور غير متطابقين"
+    }
   },
   "about": {
     "title": "حول ChattingApp",

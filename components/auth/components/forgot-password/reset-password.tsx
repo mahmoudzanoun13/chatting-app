@@ -2,10 +2,16 @@
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  createResetPasswordSchema,
+  CreateResetPasswordSchema,
+} from "@/components/auth/schemas/forgot-password-schema";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 type ResetPasswordProps = {
   nextStep: () => void;
@@ -13,11 +19,20 @@ type ResetPasswordProps = {
 
 export default function ResetPassword({ nextStep }: ResetPasswordProps) {
   const t = useTranslations("auth");
+  const validationT = useTranslations("auth.validations");
   const locale = useLocale();
 
-  const handleSubmit = () => {
+  const form = useForm<CreateResetPasswordSchema>({
+    resolver: zodResolver(createResetPasswordSchema(validationT)),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  function onSubmit(data: CreateResetPasswordSchema) {
+    console.log(data);
     nextStep();
-  };
+  }
 
   return (
     <>
@@ -29,20 +44,31 @@ export default function ResetPassword({ nextStep }: ResetPasswordProps) {
           {t("reset_password_description")}
         </p>
       </div>
-      <form className="grid gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="email">{t("email")}</Label>
-          <Input
-            required
-            id="email"
-            type="email"
-            autoComplete="username"
-            placeholder="team@chatting-app.com"
-          />
-        </div>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        noValidate
+        className="grid gap-4"
+      >
+        <Controller
+          name="email"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="email">{t("email")}</FieldLabel>
+              <Input
+                {...field}
+                id="email"
+                type="email"
+                aria-invalid={fieldState.invalid}
+                placeholder="team@chatting-app.com"
+                autoComplete="email"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         <Button
           type="submit"
-          onClick={handleSubmit}
           className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"
         >
           {t("send_reset_email")}
