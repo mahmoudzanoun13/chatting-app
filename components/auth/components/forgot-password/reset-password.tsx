@@ -5,12 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { useLocale, useTranslations } from "next-intl";
 
 type ResetPasswordProps = {
   nextStep: () => void;
 };
 
 export default function ResetPassword({ nextStep }: ResetPasswordProps) {
+  const t = useTranslations("auth");
+  const locale = useLocale();
+
   const handleSubmit = () => {
     nextStep();
   };
@@ -18,15 +22,16 @@ export default function ResetPassword({ nextStep }: ResetPasswordProps) {
   return (
     <>
       <div>
-        <h1 className="text-xl font-bold tracking-tight">Reset Password</h1>
+        <h1 className="text-xl font-bold tracking-tight">
+          {t("reset_password")}
+        </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Enter your email address and we will send you a link to reset your
-          password.
+          {t("reset_password_description")}
         </p>
       </div>
       <form className="grid gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("email")}</Label>
           <Input
             required
             id="email"
@@ -40,16 +45,16 @@ export default function ResetPassword({ nextStep }: ResetPasswordProps) {
           onClick={handleSubmit}
           className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"
         >
-          Send Reset Email
+          {t("send_reset_email")}
         </Button>
       </form>
       <p className="text-sm">
-        ← Back to
+        {locale === "ar" ? "→" : "←"} {t("back_to")}
         <Link
           href="/login"
           className={cn(buttonVariants({ variant: "link" }), "p-0.5")}
         >
-          Login
+          {t("login")}
         </Link>
       </p>
     </>

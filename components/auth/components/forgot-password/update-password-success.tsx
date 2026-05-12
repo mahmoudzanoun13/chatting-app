@@ -4,10 +4,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { useEffect } from "react";
 
 export default function UpdatePasswordSuccess() {
+  const t = useTranslations("auth");
   const router = useRouter();
 
   useEffect(() => {
@@ -24,19 +26,20 @@ export default function UpdatePasswordSuccess() {
           <Check className="size-8 text-green-500" />
         </div>
         <div className="space-y-1">
-          <h1 className="text-xl font-bold">Password Updated Successfully</h1>
+          <h1 className="text-xl font-bold">
+            {t("password_updated_successfully")}
+          </h1>
           <p className="text-sm text-muted-foreground">
-            Your password has been updated successfully. You can now log in with
-            your new password.
+            {t("password_updated_successfully_description")}
           </p>
         </div>
       </div>
       <div className="flex flex-col items-center justify-center space-y-2">
         <p className="text-sm text-muted-foreground">
-          Click here to login with your new password
+          {t("click_here_to_login_with_your_new_password")}
         </p>
         <Link href="/login" className={cn(buttonVariants({ variant: "link" }))}>
-          Login
+          {t("login")}
         </Link>
       </div>
     </>

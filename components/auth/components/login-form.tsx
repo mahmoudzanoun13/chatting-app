@@ -6,22 +6,24 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export default function LoginForm() {
+  const t = useTranslations("auth");
   const currentYear = new Date().getFullYear();
 
   return (
     <>
       <div className="flex w-full max-w-sm flex-col gap-6 rounded-lg border bg-background p-6">
         <div>
-          <h1 className="text-xl font-bold tracking-tight">Login</h1>
+          <h1 className="text-xl font-bold tracking-tight">{t("login")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Enter your details below to login
+            {t("enter_your_details_below_to_login")}
           </p>
         </div>
         <form className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("email")}</Label>
             <Input
               required
               id="email"
@@ -31,7 +33,7 @@ export default function LoginForm() {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("password")}</Label>
             <Input
               required
               id="password"
@@ -44,31 +46,31 @@ export default function LoginForm() {
             type="submit"
             className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"
           >
-            Login
+            {t("login")}
           </Button>
 
           <div className="flex h-2 w-full items-center gap-4 text-muted-foreground">
             <div className="w-full">
               <Separator />
             </div>
-            <p>or</p>
+            <p>{t("or")}</p>
             <div className="w-full">
               <Separator />
             </div>
           </div>
 
           <Button variant="outline" className="w-full cursor-pointer">
-            Login with Google
+            {t("login_with_google")}
           </Button>
         </form>
         <div className="flex flex-col text-sm">
           <p>
-            Don&apos;t have an account?
+            {t("dont_have_an_account")}
             <Link
               href="/signup"
               className={cn(buttonVariants({ variant: "link" }), "p-0.5")}
             >
-              Sign up
+              {t("signup")}
             </Link>
           </p>
           <Link
@@ -78,7 +80,7 @@ export default function LoginForm() {
               "self-start p-0",
             )}
           >
-            Forgot your password?
+            {t("forgot_your_password")}
           </Link>
         </div>
       </div>
