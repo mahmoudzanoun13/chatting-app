@@ -78,5 +78,19 @@
     "password_updated_successfully": "تم تحديث كلمة المرور بنجاح",
     "password_updated_successfully_description": "تم تحديث كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.",
     "click_here_to_login_with_your_new_password": "انقر هنا لتسجيل الدخول باستخدام كلمة المرور الجديدة"
+  },
+  "about": {
+    "title": "حول ChattingApp",
+    "description": "ChattingApp هو تطبيق مراسلة حديث في الوقت الفعلي مبني باستخدام Next.js 16 لممارسة تطوير الويب الشامل باستخدام أدوات حديثة وهيكلية قابلة للتطوير.",
+    "what_is_chattingapp": "ما هو ChattingApp؟",
+    "what_is_chattingapp_description": "ChattingApp هو تطبيق مراسلة في الوقت الفعلي حيث يمكن للمستخدمين إنشاء حسابات والمصادقة بشكل آمن والتواصل بشكل فوري مع الآخرين في واجهة حديثة ومتجاوبة.",
+    "what_features_does_the_app_support": "ما هي الميزات التي يدعمها التطبيق؟",
+    "what_features_does_the_app_support_description": "يدعم ChattingApp حاليًا المصادقة والرسائل في الوقت الفعلي ووضع الظلام ووضع الإضاءة والتصميم المتجاوب ودعم متعدد اللغات بما في ذلك الإنجليزية والعربية.",
+    "which_technologies_are_used": "ما هي التقنيات المستخدمة؟",
+    "which_technologies_are_used_description": "تم بناء المشروع باستخدام Next.js 16 و React و TypeScript و Tailwind CSS و shadcn/ui مع التركيز على بنية واضحة وممارسات تطوير واجهة مستخدم حديثة.",
+    "why_was_this_project_created": "لماذا تم إنشاء هذا المشروع؟",
+    "why_was_this_project_created_description": "تم إنشاء هذا التطبيق كمشروع تعليمي لتحسين مهارات تطوير الواجهة الأمامية والخلفية مع بناء تطبيق واقعي بأسلوب الإنتاج من الصفر باستخدام الذكاء الاصطناعي في 1% فقط من المشروع.",
+    "what_are_the_future_plans": "ما هي الخطط المستقبلية؟",
+    "what_are_the_future_plans_description": "قد تشمل التحسينات المستقبلية الدردشات الجماعية وإمكانية رفع الملفات وردود الفعل الرموز التعبيرية والرسائل الصوتية وتحسينات في ملفات تعريف المستخدمين."
   }
 }
