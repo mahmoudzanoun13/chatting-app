@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import ChatDropdown from "./chat-dropdown";
-import { type Message } from "../messages-list";
+import { type Message } from "@/app/[locale]/(chat)/chat/[userId]/page";
 import { User } from "lucide-react";
 
 type TopBarProps = {

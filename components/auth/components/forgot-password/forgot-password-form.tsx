@@ -1,19 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import ResetPassword from "./reset-password";
 import SetPassword from "./set-password";
 import UpdatePasswordSuccess from "./update-password-success";
 
 export default function ForgotPasswordForm() {
-  const [step, setStep] = useState<"reset" | "set" | "success">("reset");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const step =
+    (searchParams.get("step") as "reset" | "set" | "success") ?? "reset";
 
   const nextStep = () => {
-    setStep((prev) => {
-      if (prev === "reset") return "set";
-      if (prev === "set") return "success";
-      return prev;
-    });
+    if (step === "reset") {
+      router.push("?step=set");
+    } else if (step === "set") {
+      router.push("?step=success");
+    }
   };
 
   return (

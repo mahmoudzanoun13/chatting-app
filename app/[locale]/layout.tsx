@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_Arabic } from "next/font/google";
 import "@/app/globals.css";
-import { DirectionProvider } from "@/components/ui/direction";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import {
-  getMessages,
-  getTranslations,
-  setRequestLocale,
-} from "next-intl/server";
-import { Toaster } from "sonner";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/custom/navbar/navbar";
+import { Suspense } from "react";
+import ClientProviders from "@/components/providers/client-providers";
+import Providers from "@/components/providers/providers";
 
 type Props = {
   children: React.ReactNode;
@@ -115,8 +111,6 @@ export default async function LocaleLayout({
   // Enable static rendering
   setRequestLocale(locale);
 
-  const messages = await getMessages();
-
   return (
     <html
       lang={locale ?? "en"}
@@ -130,24 +124,18 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <DirectionProvider direction={dir || "ltr"}>
-            <NextIntlClientProvider messages={messages}>
+        <ClientProviders dir={dir}>
+          <Suspense>
+            <Providers>
               <header className="sticky top-0 z-50 w-full">
                 <Navbar />
               </header>
               <main className="mx-auto flex w-full max-w-7xl flex-1 overflow-hidden px-4 py-8">
                 {children}
               </main>
-              <Toaster richColors position="bottom-right" />
-            </NextIntlClientProvider>
-          </DirectionProvider>
-        </ThemeProvider>
+            </Providers>
+          </Suspense>
+        </ClientProviders>
       </body>
     </html>
   );

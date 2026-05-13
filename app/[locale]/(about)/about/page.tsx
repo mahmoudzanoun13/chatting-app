@@ -6,8 +6,13 @@ import {
 } from "@/components/ui/accordion";
 import { getTranslations } from "next-intl/server";
 
-export default async function AboutPage() {
-  const t = await getTranslations("about");
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function AboutPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "about" });
   return (
     <section className="mx-auto max-w-7xl space-y-10 px-4 py-16">
       <div className="mx-auto max-w-xl text-center">
