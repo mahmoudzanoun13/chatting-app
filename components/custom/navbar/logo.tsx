@@ -11,7 +11,7 @@ export function Logo({ onClose }: LogoProps) {
       dir="ltr"
       href="/chat"
       onClick={onClose}
-      className="flex items-center gap-2 group"
+      className="flex rtl:justify-end items-center gap-2 group"
     >
       <div className="flex size-9 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
         <MessageCircle className="size-5 text-primary fill-primary/10 transition-transform group-hover:scale-110" />
