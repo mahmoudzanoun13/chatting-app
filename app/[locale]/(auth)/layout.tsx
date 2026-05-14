@@ -1,4 +1,5 @@
 import { CurrentYear } from "@/components/custom/current-year";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
 
 export default function AuthLayout({
@@ -11,7 +12,7 @@ export default function AuthLayout({
       {children}
       <p dir="ltr" className="text-sm text-muted-foreground">
         ©{" "}
-        <Suspense fallback="2026">
+        <Suspense fallback={<Skeleton className="inline-block h-3 w-10" />}>
           <CurrentYear />
         </Suspense>{" "}
         ChattingApp

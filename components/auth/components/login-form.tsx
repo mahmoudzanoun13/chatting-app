@@ -12,6 +12,7 @@ import createLoginSchema, {
   CreateLoginSchema,
 } from "@/components/auth/schemas/login-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function LoginForm() {
   const t = useTranslations("auth");
@@ -81,9 +82,10 @@ export default function LoginForm() {
         />
         <Button
           type="submit"
+          disabled={form.formState.isSubmitting}
           className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"
         >
-          {t("login")}
+          {form.formState.isSubmitting ? <Spinner /> : t("login")}
         </Button>
 
         <div className="flex h-2 w-full items-center gap-4 text-muted-foreground">

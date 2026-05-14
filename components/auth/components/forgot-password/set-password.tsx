@@ -12,6 +12,7 @@ import {
   CreateSetPasswordSchema,
 } from "@/components/auth/schemas/forgot-password-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
 
 type SetPasswordProps = {
   nextStep: () => void;
@@ -90,9 +91,10 @@ export default function SetPassword({ nextStep }: SetPasswordProps) {
         />
         <Button
           type="submit"
+          disabled={form.formState.isSubmitting}
           className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"
         >
-          {t("set_new_password")}
+          {form.formState.isSubmitting ? <Spinner /> : t("set_new_password")}
         </Button>
       </form>
       <p className="text-sm">

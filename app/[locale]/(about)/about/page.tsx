@@ -5,13 +5,34 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getTranslations } from "next-intl/server";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function AboutPage({ params }: Props) {
-  const { locale } = await params;
+function AboutSkeleton() {
+  return (
+    <section className="mx-auto max-w-7xl space-y-10 px-4 py-16">
+      <div className="mx-auto max-w-xl text-center">
+        <Skeleton className="mx-auto mt-4 h-10 w-64 md:h-12" />
+        <Skeleton className="mx-auto mt-2 h-5 w-full max-w-md" />
+        <Skeleton className="mx-auto mt-1 h-5 w-3/4 max-w-sm" />
+      </div>
+
+      <div className="mx-auto w-full max-w-md space-y-4 pt-10">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="border-b last:border-0 last:pb-0 pb-4">
+            <Skeleton className="h-6 w-full" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+async function AboutContent({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "about" });
   return (
     <section className="mx-auto max-w-7xl space-y-10 px-4 py-16">
@@ -66,5 +87,14 @@ export default async function AboutPage({ params }: Props) {
         </AccordionItem>
       </Accordion>
     </section>
+  );
+}
+
+export default async function AboutPage({ params }: Props) {
+  const { locale } = await params;
+  return (
+    <Suspense fallback={<AboutSkeleton />}>
+      <AboutContent locale={locale} />
+    </Suspense>
   );
 }

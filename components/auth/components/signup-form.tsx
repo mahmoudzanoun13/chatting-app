@@ -12,6 +12,7 @@ import createSignupSchema, {
   CreateSignupSchema,
 } from "@/components/auth/schemas/signup-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function SignupForm() {
   const t = useTranslations("auth");
@@ -121,9 +122,16 @@ export default function SignupForm() {
         />
         <Button
           type="submit"
+          disabled={form.formState.isSubmitting}
           className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"
         >
-          {t("create_account")} {locale === "en" ? "→" : "←"}
+          {form.formState.isSubmitting ? (
+            <Spinner />
+          ) : (
+            <>
+              {t("create_account")} {locale === "en" ? "→" : "←"}
+            </>
+          )}
         </Button>
 
         <div className="flex h-2 w-full items-center gap-4 text-muted-foreground">

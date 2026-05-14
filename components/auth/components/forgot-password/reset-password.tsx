@@ -12,6 +12,7 @@ import {
   CreateResetPasswordSchema,
 } from "@/components/auth/schemas/forgot-password-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
 
 type ResetPasswordProps = {
   nextStep: () => void;
@@ -69,9 +70,10 @@ export default function ResetPassword({ nextStep }: ResetPasswordProps) {
         />
         <Button
           type="submit"
+          disabled={form.formState.isSubmitting}
           className="w-full cursor-pointer transition-opacity duration-300 hover:opacity-70"
         >
-          {t("send_reset_email")}
+          {form.formState.isSubmitting ? <Spinner /> : t("send_reset_email")}
         </Button>
       </form>
       <p className="text-sm">
