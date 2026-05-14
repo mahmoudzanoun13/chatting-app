@@ -71,10 +71,11 @@ export function UserNav() {
           </div>
         </div>
         <DropdownMenuSeparator className="mx-[-8px] my-2" />
-        <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2 transition-colors hover:bg-muted focus:bg-muted">
-          <Link href="/login" className="text-sm font-medium">
-            {t("auth.sign_in")}
-          </Link>
+        <DropdownMenuItem
+          render={<Link href="/login" />}
+          className="cursor-pointer rounded-lg px-3 py-2"
+        >
+          {t("auth.sign_in")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
