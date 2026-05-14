@@ -10,6 +10,7 @@ export default function MessageInput() {
   return (
     <>
       <Textarea
+        dir="auto"
         id="message"
         placeholder={t("type_message")}
         rows={1}
