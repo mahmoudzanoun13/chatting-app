@@ -57,7 +57,7 @@ export function MobileMenu() {
           }
         />
         <SheetContent side={side} className="flex flex-col gap-0">
-          <SheetHeader className="pb-6 pt-2 px-4">
+          <SheetHeader className="pb-6 pt-2 px-4 rtl:pr-2">
             <SheetTitle>
               <Logo onClose={() => setOpen(false)} />
             </SheetTitle>
