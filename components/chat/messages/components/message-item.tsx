@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
-const startsWithArabic = /^\s*[\u0600-\u06FF]/;
-
 type MessageItemProps = {
   text: string;
   sender: "me" | "other";
@@ -14,7 +12,6 @@ const MessageItem = memo(function MessageItem({
   sender,
   className,
 }: MessageItemProps) {
-  const isArabic = startsWithArabic.test(text);
   return (
     <div
       className={cn(
@@ -23,7 +20,7 @@ const MessageItem = memo(function MessageItem({
         className,
       )}
     >
-      <p dir={isArabic ? "rtl" : "ltr"} className="text-sm p-1">
+      <p dir="auto" className="text-sm p-1">
         {text}
       </p>
     </div>
