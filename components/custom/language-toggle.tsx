@@ -4,13 +4,18 @@ import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 
-export function LanguageToggle() {
+type Props = {
+  onSwitch?: () => void;
+};
+
+export function LanguageToggle({ onSwitch }: Props) {
   const locale = useLocale();
   const router = useRouter();
 
   const nextLocale = locale === "en" ? "ar" : "en";
 
   const switchLocale = () => {
+    onSwitch?.();
     router.replace("/", { locale: nextLocale });
   };
 
