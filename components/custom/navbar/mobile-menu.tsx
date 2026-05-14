@@ -12,7 +12,7 @@ import {
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Logo } from "./logo";
 import { LanguageToggle } from "../language-toggle";
 import { ModeToggle } from "../theme-toggle";
@@ -29,6 +29,9 @@ export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const t = useTranslations("navbar");
+  const locale = useLocale();
+
+  const side = locale === "ar" ? "left" : "right";
 
   useEffect(() => {
     // if user toggle desktop/mobile view close menu
@@ -53,7 +56,7 @@ export function MobileMenu() {
             </Button>
           }
         />
-        <SheetContent className="flex flex-col gap-0">
+        <SheetContent side={side} className="flex flex-col gap-0">
           <SheetHeader className="pb-6 pt-2 px-4">
             <SheetTitle>
               <Logo onClose={() => setOpen(false)} />
