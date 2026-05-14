@@ -27,7 +27,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
           aria-label={showPassword ? "Hide password" : "Show password"}
           aria-pressed={showPassword}
           title={showPassword ? "Hide password" : "Show password"}
-          className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground cursor-pointer"
+          className="absolute inset-y-0 inset-e-0 flex items-center pe-3 text-muted-foreground cursor-pointer"
         >
           {showPassword ? (
             <EyeOff className="size-4" />
