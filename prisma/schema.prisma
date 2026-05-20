@@ -45,6 +45,7 @@ model ResetToken {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
-  token     String
+  token     String  @unique
   expiresAt DateTime
+  used      Boolean  @default(false)
 }

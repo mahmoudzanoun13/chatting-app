@@ -1,17 +1,9 @@
-import { _Translator } from "next-intl";
-import { z } from "zod"
+import { z } from "zod";
+import { SchemaTranslator, defaultTranslator } from "@/lib/i18n-zod";
 
- export const createResetPasswordSchema = (t: _Translator) => {
+const createSetPasswordSchema = (t: SchemaTranslator = defaultTranslator) => {
   return z.object({
-    email: z.email({ message: t("invalid_email") }),
-  })
-}
-
-export type CreateResetPasswordSchema = z.infer<ReturnType<typeof createResetPasswordSchema>>;
-
-
-export const createSetPasswordSchema = (t: _Translator) => {
-  return z.object({
+    token: z.string().optional(),
     newPassword: z
       .string()
       .min(8, t("password_min", { min: 8 }))
@@ -23,7 +15,10 @@ export const createSetPasswordSchema = (t: _Translator) => {
   }).refine((data) => data.newPassword === data.confirmNewPassword, {
     message: t("passwords_do_not_match"),
     path: ["confirmNewPassword"],
-  })
-}
+  });
+};
 
 export type CreateSetPasswordSchema = z.infer<ReturnType<typeof createSetPasswordSchema>>;
+
+export default createSetPasswordSchema;
+
