@@ -11,7 +11,8 @@
     },
     "auth": {
       "sign_in": "Sign in",
-      "sign_up": "Get Started"
+      "sign_up": "Get Started",
+      "logout": "Logout"
     },
     "settings": {
       "settings": "Settings",
@@ -78,6 +79,8 @@
     "password_updated_successfully": "Password Updated Successfully",
     "password_updated_successfully_description": "Your password has been updated successfully. You can now log in with your new password.",
     "click_here_to_login_with_your_new_password": "Click here to login with your new password",
+    "email_sent": "Email Sent",
+    "email_sent_description": "Your reset email has been sent successfully. Please check your email inbox and follow the instructions to reset your password.",
     "validations": {
       "full_name_min": "Full name must be at least {min} characters long.",
       "full_name_max": "Full name must be at most {max} characters long.",
@@ -87,6 +90,26 @@
       "confirm_password_min": "Confirm password must be at least {min} characters long.",
       "confirm_password_max": "Confirm password must be at most {max} characters long.",
       "passwords_do_not_match": "Passwords do not match."
+    },
+    "responses": {
+      "email_already_exists": "Email already exists.",
+      "internal_server_error": "An internal server error occurred.",
+      "registration_success": "Registration successful!",
+      "invalid_credentials": "Invalid email or password.",
+      "login_success": "Login successful!",
+      "unauthorized": "Unauthorized",
+      "missing_id_token": "Missing id token",
+      "invalid_google_token": "Invalid google token",
+      "google_login_failed": "Google login failed: missing token",
+      "google_login_not_available": "Google login not available",
+      "missing_code": "Missing code",
+      "reset_email_sent": "Reset email sent",
+      "invalid_or_expired_token": "Invalid or expired token",
+      "password_reset_success": "Password reset successfully",
+      "too_many_requests": "Too many requests, please try again later",
+      "logout_success": "Logout successful!",
+      "user_not_found": "User not found",
+      "user_fetched_successfully": "User fetched successfully"
     }
   },
   "about": {

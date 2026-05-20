@@ -11,7 +11,8 @@
     },
     "auth": {
       "sign_in": "تسجيل الدخول",
-      "sign_up": "ابدأ"
+      "sign_up": "ابدأ",
+      "logout": "تسجيل الخروج"
     },
     "settings": {
       "settings": "الإعدادات",
@@ -78,6 +79,8 @@
     "password_updated_successfully": "تم تحديث كلمة المرور بنجاح",
     "password_updated_successfully_description": "تم تحديث كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.",
     "click_here_to_login_with_your_new_password": "انقر هنا لتسجيل الدخول باستخدام كلمة المرور الجديدة",
+    "email_sent": "تم إرسال البريد الإلكتروني",
+    "email_sent_description": "تم إرسال بريد إعادة التعيين بنجاح. يرجى التحقق من بريدك الإلكتروني واتباع التعليمات لإعادة تعيين كلمة المرور.",
     "validations": {
       "full_name_min": "الاسم الكامل يجب أن يكون على الأقل {min} أحرف.",
       "full_name_max": "الاسم الكامل يجب أن يكون على الأكثر {max} حرفًا.",
@@ -87,6 +90,26 @@
       "confirm_password_min": "كلمة المرور المؤكدة يجب أن تكون على الأقل {min} أحرف.",
       "confirm_password_max": "كلمة المرور المؤكدة يجب أن تكون على الأكثر {max} حرفًا.",
       "passwords_do_not_match": "كلمة المرور وتأكيد كلمة المرور غير متطابقين"
+    },
+    "responses": {
+      "email_already_exists": "البريد الإلكتروني موجود بالفعل.",
+      "internal_server_error": "حدث خطأ داخلي في الخادم.",
+      "registration_success": "تم التسجيل بنجاح!",
+      "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيح.",
+      "login_success": "تم تسجيل الدخول بنجاح!",
+      "unauthorized": "غير مصرح لك",
+      "missing_id_token": "فقدان رمز المعرف",
+      "invalid_google_token": "رمز google غير صالح",
+      "google_login_failed": "فشل تسجيل الدخول باستخدام Google: رمز مفقود",
+      "google_login_not_available": "تسجيل الدخول باستخدام Google غير متاح",
+      "missing_code": "فقدان رمز",
+      "reset_email_sent": "تم إرسال بريد إعادة التعيين",
+      "invalid_or_expired_token": "رمز غير صالح أو منتهي الصلاحية",
+      "password_reset_success": "تم إعادة تعيين كلمة المرور بنجاح",
+      "too_many_requests": "عدد كبير من الطلبات، يرجى المحاولة مرة أخرى لاحقًا",
+      "logout_success": "تم تسجيل الخروج بنجاح!",
+      "user_not_found": "المستخدم غير موجود",
+      "user_fetched_successfully": "تم جلب المستخدم بنجاح"
     }
   },
   "about": {
