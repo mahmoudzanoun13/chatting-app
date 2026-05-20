@@ -60,7 +60,7 @@ You need to have [Bun](https://bun.sh/) and [PostgreSQL](https://www.postgresql.
 
    # JWT
    JWT_SECRET="your-super-secret-jwt-key"
-   JWT_EXPIRES_IN="3600"
+   JWT_EXPIRES_IN=3600
 
    # Google OAuth
    GOOGLE_CLIENT_ID="your-google-client-id"
