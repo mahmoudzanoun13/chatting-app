@@ -121,6 +121,8 @@
 
   html {
     @apply font-sans;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   html[dir="rtl"] {
@@ -129,5 +131,7 @@
 
   body {
     @apply bg-background text-foreground p-2 md:p-5;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 }
