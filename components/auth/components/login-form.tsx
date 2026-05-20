@@ -3,20 +3,26 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import createLoginSchema, {
-  CreateLoginSchema,
-} from "@/components/auth/schemas/login-schema";
+  type CreateLoginSchema,
+} from "@/schemas/login-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
+import { useAuthStore } from "@/stores/auth-store";
 
 export default function LoginForm() {
   const t = useTranslations("auth");
   const validationT = useTranslations("auth.validations");
+  const responseT = useTranslations("auth.responses");
+  const router = useRouter();
+
+  const fetchMe = useAuthStore((state) => state.fetchMe);
 
   const form = useForm<CreateLoginSchema>({
     resolver: zodResolver(createLoginSchema(validationT)),
@@ -26,8 +32,36 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(data: CreateLoginSchema) {
-    console.log(data);
+  async function onSubmit(data: CreateLoginSchema) {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      const messageKey = result.message ?? "internal_server_error";
+
+      if (!result.success) {
+        const translatedMessage = t.has(`responses.${messageKey}`)
+          ? responseT(messageKey)
+          : validationT(messageKey, result.params);
+
+        toast.error(translatedMessage);
+        return;
+      }
+
+      toast.success(responseT(messageKey));
+      form.reset();
+      await fetchMe();
+      router.replace("/chat");
+    } catch (error) {
+      console.error(error);
+      toast.error(responseT("internal_server_error"));
+    }
   }
 
   return (
@@ -98,7 +132,11 @@ export default function LoginForm() {
           </div>
         </div>
 
-        <Button variant="outline" className="w-full cursor-pointer">
+        <Button
+          onClick={() => (window.location.href = "/api/auth/google/redirect")}
+          variant="outline"
+          className="w-full cursor-pointer"
+        >
           {t("login_with_google")}
         </Button>
       </form>

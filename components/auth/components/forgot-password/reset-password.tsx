@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  createResetPasswordSchema,
-  CreateResetPasswordSchema,
-} from "@/components/auth/schemas/forgot-password-schema";
+import createResetPasswordSchema, {
+  type CreateResetPasswordSchema,
+} from "@/schemas/reset-password-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 type ResetPasswordProps = {
   nextStep: () => void;
@@ -21,6 +21,7 @@ type ResetPasswordProps = {
 export default function ResetPassword({ nextStep }: ResetPasswordProps) {
   const t = useTranslations("auth");
   const validationT = useTranslations("auth.validations");
+  const responseT = useTranslations("auth.responses");
   const locale = useLocale();
 
   const form = useForm<CreateResetPasswordSchema>({
@@ -30,8 +31,34 @@ export default function ResetPassword({ nextStep }: ResetPasswordProps) {
     },
   });
 
-  function onSubmit(data: CreateResetPasswordSchema) {
-    console.log(data);
+  async function onSubmit(data: CreateResetPasswordSchema) {
+    try {
+      const response = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      const messageKey = result.message ?? "internal_server_error";
+
+      if (!result.success) {
+        const translatedMessage = t.has(`responses.${messageKey}`)
+          ? responseT(messageKey)
+          : validationT(messageKey, result.params);
+
+        toast.error(translatedMessage);
+        return;
+      }
+
+      toast.success(responseT(messageKey));
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      toast.error(responseT("internal_server_error"));
+    }
     nextStep();
   }
 

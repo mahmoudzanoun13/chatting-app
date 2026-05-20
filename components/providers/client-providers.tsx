@@ -3,6 +3,7 @@
 import { ThemeProvider } from "./theme-provider";
 import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "sonner";
+import AuthProvider from "./auth-provider";
 
 type Props = {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ export default function ClientProviders({ children, dir }: Props) {
       disableTransitionOnChange
     >
       <DirectionProvider direction={dir ?? "ltr"}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <Toaster richColors position="bottom-right" />
       </DirectionProvider>
     </ThemeProvider>
