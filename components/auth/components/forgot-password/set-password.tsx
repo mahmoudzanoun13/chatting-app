@@ -7,12 +7,14 @@ import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  createSetPasswordSchema,
-  CreateSetPasswordSchema,
-} from "@/components/auth/schemas/forgot-password-schema";
+import createSetPasswordSchema, {
+  type CreateSetPasswordSchema,
+} from "@/schemas/set-password-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
+import { useAuthStore } from "@/stores/auth-store";
 
 type SetPasswordProps = {
   nextStep: () => void;
@@ -21,7 +23,11 @@ type SetPasswordProps = {
 export default function SetPassword({ nextStep }: SetPasswordProps) {
   const t = useTranslations("auth");
   const validationT = useTranslations("auth.validations");
+  const responseT = useTranslations("auth.responses");
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") ?? "";
+  const fetchMe = useAuthStore((state) => state.fetchMe);
 
   const form = useForm<CreateSetPasswordSchema>({
     resolver: zodResolver(createSetPasswordSchema(validationT)),
@@ -31,8 +37,35 @@ export default function SetPassword({ nextStep }: SetPasswordProps) {
     },
   });
 
-  function onSubmit(data: CreateSetPasswordSchema) {
-    console.log(data);
+  async function onSubmit(data: CreateSetPasswordSchema) {
+    try {
+      const response = await fetch("/api/auth/set-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...data, token }),
+      });
+
+      const result = await response.json();
+      const messageKey = result.message ?? "internal_server_error";
+
+      if (!result.success) {
+        const translatedMessage = t.has(`responses.${messageKey}`)
+          ? responseT(messageKey)
+          : validationT(messageKey, result.params);
+
+        toast.error(translatedMessage);
+        return;
+      }
+
+      toast.success(responseT(messageKey));
+      form.reset();
+      await fetchMe();
+    } catch (error) {
+      console.error(error);
+      toast.error(responseT("internal_server_error"));
+    }
     nextStep();
   }
 

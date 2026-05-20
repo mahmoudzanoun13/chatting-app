@@ -3,34 +3,64 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import createSignupSchema, {
-  CreateSignupSchema,
-} from "@/components/auth/schemas/signup-schema";
+import createRegisterSchema, {
+  type CreateRegisterSchema,
+} from "@/schemas/register-schema";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 export default function SignupForm() {
   const t = useTranslations("auth");
   const validationT = useTranslations("auth.validations");
+  const responseT = useTranslations("auth.responses");
   const locale = useLocale();
+  const router = useRouter();
 
-  const form = useForm<CreateSignupSchema>({
-    resolver: zodResolver(createSignupSchema(validationT)),
+  const form = useForm<CreateRegisterSchema>({
+    resolver: zodResolver(createRegisterSchema(validationT)),
     defaultValues: {
-      fullName: "",
+      name: "",
       email: "",
-      newPassword: "",
+      password: "",
       confirmPassword: "",
     },
   });
 
-  function onSubmit(data: CreateSignupSchema) {
-    console.log(data);
+  async function onSubmit(data: CreateRegisterSchema) {
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      const messageKey = result.message ?? "internal_server_error";
+
+      if (!result.success) {
+        const translatedMessage = t.has(`responses.${messageKey}`)
+          ? responseT(messageKey)
+          : validationT(messageKey, result.params);
+
+        toast.error(translatedMessage);
+        return;
+      }
+
+      toast.success(responseT(messageKey));
+      form.reset();
+      router.push("/login");
+    } catch (error) {
+      console.error(error);
+      toast.error(responseT("internal_server_error"));
+    }
   }
 
   return (
@@ -48,14 +78,14 @@ export default function SignupForm() {
         className="grid gap-4"
       >
         <Controller
-          name="fullName"
+          name="name"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="fullName">{t("full_name")}</FieldLabel>
+              <FieldLabel htmlFor="name">{t("full_name")}</FieldLabel>
               <Input
                 {...field}
-                id="fullName"
+                id="name"
                 aria-invalid={fieldState.invalid}
                 placeholder={t("full_name")}
                 autoComplete="name"
@@ -83,14 +113,14 @@ export default function SignupForm() {
           )}
         />
         <Controller
-          name="newPassword"
+          name="password"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="newPassword">{t("new_password")}</FieldLabel>
+              <FieldLabel htmlFor="password">{t("new_password")}</FieldLabel>
               <Input
                 {...field}
-                id="newPassword"
+                id="password"
                 type="password"
                 aria-invalid={fieldState.invalid}
                 placeholder="••••••••"
@@ -144,7 +174,11 @@ export default function SignupForm() {
           </div>
         </div>
 
-        <Button variant="outline" className="w-full cursor-pointer">
+        <Button
+          onClick={() => (window.location.href = "/api/auth/google/redirect")}
+          variant="outline"
+          className="w-full cursor-pointer"
+        >
           {t("continue_with_google")}
         </Button>
       </form>
