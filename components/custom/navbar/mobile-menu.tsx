@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import {
   Sheet,
   SheetContent,
@@ -19,6 +19,7 @@ import { ModeToggle } from "../theme-toggle";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User, Globe, Moon, Sun } from "lucide-react";
+import { useAuthStore } from "@/stores/auth-store";
 
 const links = [
   { label: "chat", href: "/chat" },
@@ -30,8 +31,13 @@ export function MobileMenu() {
   const pathname = usePathname();
   const t = useTranslations("navbar");
   const locale = useLocale();
+  const router = useRouter();
 
   const side = locale === "ar" ? "left" : "right";
+
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const loading = useAuthStore((state) => state.loading);
 
   useEffect(() => {
     // if user toggle desktop/mobile view close menu
@@ -44,6 +50,15 @@ export function MobileMenu() {
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, [pathname]);
+
+  const handleLogout = async () => {
+    await logout();
+    router.replace("/login");
+  };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div>
@@ -71,9 +86,9 @@ export function MobileMenu() {
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="text-sm font-bold">Username</span>
+                <span className="text-sm font-bold">{user?.name}</span>
                 <span className="text-xs text-muted-foreground">
-                  user@example.com
+                  {user?.email}
                 </span>
               </div>
             </div>
@@ -131,16 +146,28 @@ export function MobileMenu() {
             <Separator className="my-4" />
 
             <div className="mt-auto flex flex-col gap-2 pb-6">
-              <Link
-                href="/login"
-                onClick={() => setOpen(false)}
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" }),
-                  "h-10 w-full rounded-xl px-3",
-                )}
-              >
-                {t("auth.sign_in")}
-              </Link>
+              {user && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className={cn("h-10 w-full rounded-xl px-3")}
+                >
+                  {t("auth.logout")}
+                </Button>
+              )}
+              {!user && (
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "sm" }),
+                    "h-10 w-full rounded-xl px-3",
+                  )}
+                >
+                  {t("auth.sign_in")}
+                </Link>
+              )}
               <Link
                 href="/signup"
                 onClick={() => setOpen(false)}
