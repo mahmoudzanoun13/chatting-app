@@ -15,22 +15,24 @@ import { useTranslations } from "next-intl";
 import { LanguageToggle } from "../language-toggle";
 import { ModeToggle } from "../theme-toggle";
 import { Link, useRouter } from "@/i18n/navigation";
-import { useAuthStore } from "@/stores/auth-store";
+import { useQuery } from "@tanstack/react-query";
+import { meQuery } from "@/hooks/queries/auth/me";
+import { useLogout } from "@/hooks/mutations/auth/use-logout";
+import { Spinner } from "@/components/ui/spinner";
 
 export function UserNav() {
   const t = useTranslations("navbar");
   const router = useRouter();
 
-  const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
-  const loading = useAuthStore((state) => state.loading);
+  const { data: user, isLoading } = useQuery(meQuery);
+  const { mutateAsync: logout, isPending } = useLogout();
 
   const handleLogout = async () => {
     await logout();
     router.replace("/login");
   };
 
-  if (loading) {
+  if (isLoading) {
     return null;
   }
 
@@ -89,9 +91,10 @@ export function UserNav() {
         {user && (
           <DropdownMenuItem
             onClick={handleLogout}
+            disabled={isPending}
             className="cursor-pointer rounded-lg px-3 py-2"
           >
-            {t("auth.logout")}
+            {isPending ? <Spinner /> : t("auth.logout")}
           </DropdownMenuItem>
         )}
         {!user && (
