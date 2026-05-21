@@ -47,6 +47,7 @@
     "select_conversation": "Select a conversation..."
   },
   "users": {
+    "no_users": "No users found",
     "responses": {
       "users_fetched_successfully": "Users fetched successfully",
       "invalid_user_id": "Invalid user id"
