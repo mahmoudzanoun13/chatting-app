@@ -16,6 +16,8 @@ A modern, high-performance chatting application built with Next.js 16+, React 19
 - **Password Reset**: Secure email-based password reset with single-use tokens.
 - **Route Protection**: Middleware guards protecting authenticated and guest-only routes.
 - **Rate Limiting**: IP-based rate limiting on reset password auth endpoint (local memory not Redis for now).
+- **Data Fetching**: Efficient server state management and caching with [TanStack Query](https://tanstack.com/query) v5.
+- **Code Quality**: Enforced best practices with ESLint and specialized plugins.
 
 ## 🛠️ Tech Stack
 
@@ -27,6 +29,7 @@ A modern, high-performance chatting application built with Next.js 16+, React 19
 - **UI Components**: [Shadcn UI](https://ui.shadcn.com/)
 - **Package Manager**: [Bun](https://bun.sh/)
 - **I18n**: [next-intl](https://next-intl-docs.vercel.app/)
+- **Data Fetching**: [TanStack Query v5](https://tanstack.com/query)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Mailer**: [Nodemailer](https://nodemailer.com/)
 
