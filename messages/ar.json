@@ -46,6 +46,12 @@
     "send": "إرسال",
     "select_conversation": "اختر محادثة..."
   },
+  "users": {
+    "responses": {
+      "users_fetched_successfully": "تم جلب المستخدمين بنجاح",
+      "invalid_user_id": "معرف المستخدم غير صالح"
+    }
+  },
   "auth": {
     "login": "تسجيل الدخول",
     "signup": "إنشاء حساب",

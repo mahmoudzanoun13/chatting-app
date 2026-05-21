@@ -46,6 +46,12 @@
     "send": "Send",
     "select_conversation": "Select a conversation..."
   },
+  "users": {
+    "responses": {
+      "users_fetched_successfully": "Users fetched successfully",
+      "invalid_user_id": "Invalid user id"
+    }
+  },
   "auth": {
     "login": "Login",
     "signup": "Sign up",
