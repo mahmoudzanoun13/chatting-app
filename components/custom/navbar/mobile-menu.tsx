@@ -23,6 +23,7 @@ import { useQuery } from "@tanstack/react-query";
 import { meQuery } from "@/hooks/queries/auth/me";
 import { useLogout } from "@/hooks/mutations/auth/use-logout";
 import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const links = [
   { label: "chat", href: "/chat" },
@@ -58,9 +59,8 @@ export function MobileMenu() {
     router.replace("/login");
   };
 
-  if (isLoading) {
-    return null;
-  }
+  const namePlaceholder = <Skeleton className="h-4 w-24 rounded" />;
+  const emailPlaceholder = <Skeleton className="h-3 w-32 rounded" />;
 
   return (
     <div>
@@ -88,9 +88,11 @@ export function MobileMenu() {
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="text-sm font-bold">{user?.name}</span>
+                <span className="text-sm font-bold">
+                  {isLoading ? namePlaceholder : user?.name}
+                </span>
                 <span className="text-xs text-muted-foreground">
-                  {user?.email}
+                  {isLoading ? emailPlaceholder : user?.email}
                 </span>
               </div>
             </div>

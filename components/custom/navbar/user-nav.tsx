@@ -19,6 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import { meQuery } from "@/hooks/queries/auth/me";
 import { useLogout } from "@/hooks/mutations/auth/use-logout";
 import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function UserNav() {
   const t = useTranslations("navbar");
@@ -32,9 +33,8 @@ export function UserNav() {
     router.replace("/login");
   };
 
-  if (isLoading) {
-    return null;
-  }
+  const namePlaceholder = <Skeleton className="h-4 w-24 rounded" />;
+  const emailPlaceholder = <Skeleton className="h-3 w-32 rounded" />;
 
   return (
     <DropdownMenu>
@@ -56,9 +56,11 @@ export function UserNav() {
         <DropdownMenuGroup className="px-2 py-3">
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-bold leading-none">{user?.name}</p>
+              <p className="text-sm font-bold leading-none">
+                {isLoading ? namePlaceholder : user?.name}
+              </p>
               <p className="text-xs leading-none text-muted-foreground">
-                {user?.email}
+                {isLoading ? emailPlaceholder : user?.email}
               </p>
             </div>
           </DropdownMenuLabel>
