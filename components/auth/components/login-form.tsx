@@ -14,15 +14,15 @@ import createLoginSchema, {
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
-import { useAuthStore } from "@/stores/auth-store";
+import { useQueryClient } from "@tanstack/react-query";
+import { meQuery } from "@/hooks/queries/auth/me";
 
 export default function LoginForm() {
   const t = useTranslations("auth");
   const validationT = useTranslations("auth.validations");
   const responseT = useTranslations("auth.responses");
   const router = useRouter();
-
-  const fetchMe = useAuthStore((state) => state.fetchMe);
+  const queryClient = useQueryClient();
 
   const form = useForm<CreateLoginSchema>({
     resolver: zodResolver(createLoginSchema(validationT)),
@@ -56,7 +56,7 @@ export default function LoginForm() {
 
       toast.success(responseT(messageKey));
       form.reset();
-      await fetchMe();
+      await queryClient.invalidateQueries({ queryKey: meQuery.queryKey });
       router.replace("/chat");
     } catch (error) {
       console.error(error);

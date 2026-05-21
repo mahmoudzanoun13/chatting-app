@@ -14,7 +14,8 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
-import { useAuthStore } from "@/stores/auth-store";
+import { useQueryClient } from "@tanstack/react-query";
+import { meQuery } from "@/hooks/queries/auth/me";
 
 type SetPasswordProps = {
   nextStep: () => void;
@@ -27,7 +28,7 @@ export default function SetPassword({ nextStep }: SetPasswordProps) {
   const locale = useLocale();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
-  const fetchMe = useAuthStore((state) => state.fetchMe);
+  const queryClient = useQueryClient();
 
   const form = useForm<CreateSetPasswordSchema>({
     resolver: zodResolver(createSetPasswordSchema(validationT)),
@@ -61,7 +62,7 @@ export default function SetPassword({ nextStep }: SetPasswordProps) {
 
       toast.success(responseT(messageKey));
       form.reset();
-      await fetchMe();
+      await queryClient.invalidateQueries({ queryKey: meQuery.queryKey });
     } catch (error) {
       console.error(error);
       toast.error(responseT("internal_server_error"));

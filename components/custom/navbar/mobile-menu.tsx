@@ -19,7 +19,10 @@ import { ModeToggle } from "../theme-toggle";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User, Globe, Moon, Sun } from "lucide-react";
-import { useAuthStore } from "@/stores/auth-store";
+import { useQuery } from "@tanstack/react-query";
+import { meQuery } from "@/hooks/queries/auth/me";
+import { useLogout } from "@/hooks/mutations/auth/use-logout";
+import { Spinner } from "@/components/ui/spinner";
 
 const links = [
   { label: "chat", href: "/chat" },
@@ -35,9 +38,8 @@ export function MobileMenu() {
 
   const side = locale === "ar" ? "left" : "right";
 
-  const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
-  const loading = useAuthStore((state) => state.loading);
+  const { data: user, isLoading } = useQuery(meQuery);
+  const { mutateAsync: logout, isPending } = useLogout();
 
   useEffect(() => {
     // if user toggle desktop/mobile view close menu
@@ -56,7 +58,7 @@ export function MobileMenu() {
     router.replace("/login");
   };
 
-  if (loading) {
+  if (isLoading) {
     return null;
   }
 
@@ -146,14 +148,16 @@ export function MobileMenu() {
             <Separator className="my-4" />
 
             <div className="mt-auto flex flex-col gap-2 pb-6">
+              {/* TODO: add loading state */}
               {user && (
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={handleLogout}
+                  disabled={isPending}
                   className={cn("h-10 w-full rounded-xl px-3")}
                 >
-                  {t("auth.logout")}
+                  {isPending ? <Spinner /> : t("auth.logout")}
                 </Button>
               )}
               {!user && (
