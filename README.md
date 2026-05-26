@@ -6,6 +6,7 @@ A modern, high-performance chatting application built with Next.js 16+, React 19
 
 - **Modern Tech Stack**: Built with Next.js 16, React 19, and Tailwind CSS 4.
 - **Internationalization**: Full RTL/LTR support using `next-intl`.
+- **Real-time Chat**: Bi-directional communication powered by a [Custom Socket.IO Server](./SOCKET.md).
 - **Premium UI/UX**: Designed with Shadcn UI (Nova style) for a sleek, modern look.
 - **Fast Performance**: Powered by Bun for blazing fast installation and execution.
 - **Form Validation**: Type-safe forms using React Hook Form and Zod.
@@ -15,6 +16,7 @@ A modern, high-performance chatting application built with Next.js 16+, React 19
 - **Google OAuth**: Sign in with Google via OAuth 2.0.
 - **Password Reset**: Secure email-based password reset with single-use tokens.
 - **Route Protection**: Middleware guards protecting authenticated and guest-only routes.
+- **Optimistic Updates**: Instant UI feedback with server-side deduplication.
 - **Rate Limiting**: IP-based rate limiting on reset password auth endpoint (local memory not Redis for now).
 - **Data Fetching**: Efficient server state management and caching with [TanStack Query](https://tanstack.com/query) v5.
 - **Code Quality**: Enforced best practices with ESLint and specialized plugins.
@@ -30,6 +32,7 @@ A modern, high-performance chatting application built with Next.js 16+, React 19
 - **Package Manager**: [Bun](https://bun.sh/)
 - **I18n**: [next-intl](https://next-intl-docs.vercel.app/)
 - **Data Fetching**: [TanStack Query v5](https://tanstack.com/query)
+- **Real-time**: [Socket.IO](https://socket.io/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Mailer**: [Nodemailer](https://nodemailer.com/)
 
@@ -73,6 +76,11 @@ You need to have [Bun](https://bun.sh/) and [PostgreSQL](https://www.postgresql.
    NEXT_PUBLIC_APP_URL="http://localhost:3000"
    NEXT_PUBLIC_GOOGLE_CLIENT_ID="your-google-client-id"
    NEXT_PUBLIC_GOOGLE_REDIRECT_URI="http://localhost:3000/api/auth/google/callback"
+
+   # Socket
+   NEXT_PUBLIC_SOCKET_URL="http://localhost:3001"
+   HOSTNAME="localhost"
+   SOCKET_PORT=3001
    ```
 
 4. Initialize the database:
@@ -82,9 +90,14 @@ You need to have [Bun](https://bun.sh/) and [PostgreSQL](https://www.postgresql.
    bun db:seed
    ```
 
-5. Run the development server:
+5. Run the development servers:
+
    ```bash
+   # Terminal 1: Next.js
    bun run dev
+
+   # Terminal 2: Socket Server
+   bun run dev:server
    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -152,7 +165,8 @@ The application uses Prisma with PostgreSQL. Key models include:
 
 ## 📜 Scripts
 
-- `bun dev`: Starts the development server.
+- `bun dev`: Starts the Next.js development server.
+- `bun dev:server`: Starts the custom Socket.IO server.
 - `bun build`: Builds the application for production.
 - `bun start`: Starts the production server.
 - `bun lint`: Runs ESLint for code quality checks.

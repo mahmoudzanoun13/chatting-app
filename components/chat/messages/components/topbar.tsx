@@ -1,27 +1,30 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ChatDropdown from "./chat-dropdown";
-import { type Message } from "@/app/[locale]/(chat)/chat/[userId]/page";
 import { User } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { userQuery } from "@/hooks/queries/users/user";
 
 type TopBarProps = {
-  messages: Message[];
+  userId?: string;
 };
 
-export default function TopBar({ messages }: TopBarProps) {
+export default function TopBar({ userId }: TopBarProps) {
+  const { data: user } = useQuery(userQuery(userId));
+  const displayInitial = user?.name?.charAt(0).toUpperCase() ?? "";
   return (
     <div dir="ltr" className="flex items-center justify-between py-2 mb-auto">
       <div className="flex items-center gap-2">
         <Avatar className="size-8">
-          <AvatarFallback>
-            {messages.length > 0 ? (
-              messages?.[0]?.sender.charAt(0).toUpperCase()
-            ) : (
-              <User className="size-4" />
-            )}
-          </AvatarFallback>
+          {user?.avatar ? (
+            <AvatarImage src={user.avatar} alt={user.name ?? "User"} />
+          ) : (
+            <AvatarFallback>
+              {displayInitial ?? <User className="size-4" />}
+            </AvatarFallback>
+          )}
         </Avatar>
         <p className="text-sm font-semibold capitalize">
-          {messages.length > 0 ? messages?.[0]?.sender : "User"}
+          {user?.name ?? "User"}
         </p>
       </div>
       <ChatDropdown />
