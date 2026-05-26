@@ -3,7 +3,11 @@ import prisma from "@/lib/prisma";
 import { verifyAuthCookie } from "@/lib/auth";
 import { jsonResponse } from "@/lib/api-response";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+interface Params {
+  params: Promise<{ id: string }>;
+}
+
+export async function GET(req: NextRequest, { params }: Params) {
   try {
     const auth = verifyAuthCookie(req);
 

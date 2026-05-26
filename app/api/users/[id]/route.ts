@@ -4,9 +4,7 @@ import { jsonResponse } from "@/lib/api-response";
 import { verifyAuthCookie } from "@/lib/auth";
 
 interface Params {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(req: NextRequest, { params }: Params) {

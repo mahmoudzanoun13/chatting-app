@@ -4,10 +4,10 @@ import { verifyAuthCookie } from "@/lib/auth";
 import { jsonResponse } from "@/lib/api-response";
 
 interface Params {
-  id: string;
+  params: Promise<{ id: string }>;
 }
 
-export async function GET(req: NextRequest, { params }: { params: Params }) {
+export async function GET(req: NextRequest, { params }: Params) {
   try {
     const auth = verifyAuthCookie(req);
 
