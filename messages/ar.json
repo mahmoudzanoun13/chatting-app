@@ -53,6 +53,20 @@
       "invalid_user_id": "معرف المستخدم غير صالح"
     }
   },
+  "messages": {
+    "messages_fetched_successfully": "تم جلب الرسائل بنجاح",
+    "invalid_conversation_id": "معرف المحادثة غير صالح",
+    "conversation_not_found": "المحادثة غير موجودة",
+    "conversation_fetched_successfully": "تم جلب المحادثة بنجاح",
+    "conversations_fetched_successfully": "تم جلب المحادثات بنجاح",
+    "invalid_message_id": "معرف الرسالة غير صالح",
+    "message_not_found": "الرسالة غير موجودة",
+    "message_fetched_successfully": "تم جلب الرسالة بنجاح",
+    "socket_initialized": "تم تهيئة خادم Socket.IO",
+    "socket_not_initialized": "فشل تهيئة خادم Socket.IO",
+    "invalid_message_content": "محتوى الرسالة غير صالح",
+    "message_sent_successfully": "تم إرسال الرسالة بنجاح"
+  },
   "auth": {
     "login": "تسجيل الدخول",
     "signup": "إنشاء حساب",

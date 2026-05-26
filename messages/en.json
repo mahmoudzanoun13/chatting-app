@@ -53,6 +53,20 @@
       "invalid_user_id": "Invalid user id"
     }
   },
+  "messages": {
+    "messages_fetched_successfully": "Messages fetched successfully",
+    "invalid_conversation_id": "Invalid conversation id",
+    "conversation_not_found": "Conversation not found",
+    "conversation_fetched_successfully": "Conversation fetched successfully",
+    "conversations_fetched_successfully": "Conversations fetched successfully",
+    "invalid_message_id": "Invalid message id",
+    "message_not_found": "Message not found",
+    "message_fetched_successfully": "Message fetched successfully",
+    "socket_initialized": "Socket.IO server initialized",
+    "socket_not_initialized": "Failed to initialize Socket.IO server",
+    "invalid_message_content": "Invalid message content",
+    "message_sent_successfully": "Message sent successfully"
+  },
   "auth": {
     "login": "Login",
     "signup": "Sign up",
