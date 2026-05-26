@@ -12,8 +12,10 @@ export function useLogout() {
       });
     },
 
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: meQuery.queryKey });
+    onSuccess: () => {
+      // Set me to null immediately to mark as logged out, 
+      // but don't clear() yet to avoid refetching on the current page.
+      queryClient.setQueryData(meQuery.queryKey, null);
     },
   });
 }

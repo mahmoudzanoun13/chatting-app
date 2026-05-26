@@ -15,7 +15,7 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { meQuery } from "@/hooks/queries/auth/me";
+import { useEffect } from "react";
 
 export default function LoginForm() {
   const t = useTranslations("auth");
@@ -23,6 +23,10 @@ export default function LoginForm() {
   const responseT = useTranslations("auth.responses");
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.clear();
+  }, [queryClient]);
 
   const form = useForm<CreateLoginSchema>({
     resolver: zodResolver(createLoginSchema(validationT)),
@@ -56,7 +60,7 @@ export default function LoginForm() {
 
       toast.success(responseT(messageKey));
       form.reset();
-      await queryClient.invalidateQueries({ queryKey: meQuery.queryKey });
+      queryClient.clear();
       router.replace("/chat");
     } catch (error) {
       console.error(error);

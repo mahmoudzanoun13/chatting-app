@@ -17,8 +17,9 @@ export async function GET(req: NextRequest, { params }: Params) {
       return jsonResponse(false, null, "unauthorized", {}, 401);
     }
 
-    const userId = Number(params.id);
+    const { id } = await params;
 
+    const userId = Number(id);
     if (isNaN(userId)) {
       return jsonResponse(false, null, "invalid_user_id", {}, 400);
     }

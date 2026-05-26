@@ -15,8 +15,7 @@ import { useTranslations } from "next-intl";
 import { LanguageToggle } from "../language-toggle";
 import { ModeToggle } from "../theme-toggle";
 import { Link, useRouter } from "@/i18n/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { meQuery } from "@/hooks/queries/auth/me";
+import { useCurrentAuth } from "@/hooks/queries/auth/use-current-auth";
 import { useLogout } from "@/hooks/mutations/auth/use-logout";
 import { Spinner } from "@/components/ui/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -25,7 +24,7 @@ export function UserNav() {
   const t = useTranslations("navbar");
   const router = useRouter();
 
-  const { data: user, isLoading } = useQuery(meQuery);
+  const { data: user, isLoading } = useCurrentAuth();
   const { mutateAsync: logout, isPending } = useLogout();
 
   const handleLogout = async () => {
