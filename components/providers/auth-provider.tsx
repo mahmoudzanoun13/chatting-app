@@ -1,13 +1,13 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { meQuery } from "@/hooks/queries/auth/me";
+import { useCurrentAuth } from "@/hooks/queries/auth/use-current-auth";
 
 export default function AuthProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useQuery(meQuery);
+  useCurrentAuth();
+
   return children;
 }

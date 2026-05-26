@@ -9,7 +9,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -39,7 +39,9 @@ export default function ClientProviders({ children, dir }: Props) {
         disableTransitionOnChange
       >
         <DirectionProvider direction={dir ?? "ltr"}>
-          <AuthProvider>{children}</AuthProvider>
+          <Suspense fallback={null}>
+            <AuthProvider>{children}</AuthProvider>
+          </Suspense>
           <Toaster richColors position="bottom-right" />
         </DirectionProvider>
       </ThemeProvider>

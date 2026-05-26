@@ -19,8 +19,7 @@ import { ModeToggle } from "../theme-toggle";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User, Globe, Moon, Sun } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { meQuery } from "@/hooks/queries/auth/me";
+import { useCurrentAuth } from "@/hooks/queries/auth/use-current-auth";
 import { useLogout } from "@/hooks/mutations/auth/use-logout";
 import { Spinner } from "@/components/ui/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -39,7 +38,7 @@ export function MobileMenu() {
 
   const side = locale === "ar" ? "left" : "right";
 
-  const { data: user, isLoading } = useQuery(meQuery);
+  const { data: user, isLoading } = useCurrentAuth();
   const { mutateAsync: logout, isPending } = useLogout();
 
   useEffect(() => {

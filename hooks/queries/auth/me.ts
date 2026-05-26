@@ -17,4 +17,5 @@ async function fetchMe() {
 export const meQuery = queryOptions({
   queryKey: ["auth", "me"],
   queryFn: fetchMe,
+  retry: false,
 });
