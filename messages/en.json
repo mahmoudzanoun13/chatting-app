@@ -44,7 +44,10 @@
     "no_messages": "No messages yet...",
     "more_options": "More options",
     "send": "Send",
-    "select_conversation": "Select a conversation..."
+    "select_conversation": "Select a conversation...",
+    "online": "Online",
+    "offline": "Offline",
+    "typing": "Typing..."
   },
   "users": {
     "no_users": "No users found",
