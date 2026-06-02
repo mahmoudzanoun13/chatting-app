@@ -3,6 +3,9 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  experimental: {
+    hideLogsAfterAbort: true,
+  },
   images: {
     remotePatterns: [
       {
