@@ -29,7 +29,7 @@ The app supports:
 - Real-time: Socket.IO
 - Database: PostgreSQL (local)
 - ORM: Prisma (Type-safe, migrations, relationships)
-- State Management: Zustand (for online users + notifications)
+- State Management: Zustand (for online users, typing indicators + notifications)
 
 ## System Architecture
 

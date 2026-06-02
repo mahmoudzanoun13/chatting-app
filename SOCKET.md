@@ -32,12 +32,26 @@ Authentication is handled via the same JWT token used by the Next.js app:
 | `join_conversation`  | `conversationId: number`                                         | Joins a specific room for real-time updates.                     |
 | `leave_conversation` | `conversationId: number`                                         | Leaves the conversation room.                                    |
 | `send_message`       | `content: string, conversationId: number, clientTempId?: number` | Sends a message. Includes an optional temp ID for deduplication. |
+| `typing_status`      | `conversationId: number, isTyping: boolean`                      | Tells the server if the user is currently typing in a room.      |
 
 ### Server -> Client
 
-| Event             | Payload                                         | Description                                          |
-| ----------------- | ----------------------------------------------- | ---------------------------------------------------- |
-| `receive_message` | `Message { ...message, clientTempId?: number }` | Broadcasts a new message to all members in the room. |
+| Event                   | Payload                                         | Description                                          |
+| ----------------------- | ----------------------------------------------- | ---------------------------------------------------- |
+| `receive_message`       | `Message { ...message, clientTempId?: number }` | Broadcasts a new message to all members in the room. |
+| `user_typing_status`    | `userId: number, isTyping: boolean`             | Broadcasts a user's typing status to the room.       |
+| `online_users_snapshot` | `users: number[]`                               | Sends a list of all online user IDs upon connection. |
+| `user_online`           | `userId: number`                                | Broadcasts when a user comes online.                 |
+| `user_offline`          | `userId: number`                                | Broadcasts when a user goes offline.                 |
+
+## 🟢 Presence Tracking
+
+The server tracks user presence using a global `Map<number, Set<string>>`.
+
+- A user is **Online** as long as they have at least one active socket connection (across multiple tabs).
+- When the first connection is established, the server broadcasts `user_online`.
+- When the last connection is closed, the server broadcasts `user_offline`.
+- Upon connection, the client receives an `online_users_snapshot` to sync initial state.
 
 ## 🚀 Optimistic UI & Deduplication
 

@@ -17,8 +17,11 @@ A modern, high-performance chatting application built with Next.js 16+, React 19
 - **Password Reset**: Secure email-based password reset with single-use tokens.
 - **Route Protection**: Middleware guards protecting authenticated and guest-only routes.
 - **Optimistic Updates**: Instant UI feedback with server-side deduplication.
+- **Presence Tracking**: Real-time online/offline status indicators.
+- **Typing Indicators**: Live "Typing..." feedback during conversations.
 - **Rate Limiting**: IP-based rate limiting on reset password auth endpoint (local memory not Redis for now).
 - **Data Fetching**: Efficient server state management and caching with [TanStack Query](https://tanstack.com/query) v5.
+- **State Management**: Robust local and global state powered by [Zustand](https://zustand-demo.pmnd.rs/).
 - **Code Quality**: Enforced best practices with ESLint and specialized plugins.
 
 ## 🛠️ Tech Stack

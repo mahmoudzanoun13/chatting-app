@@ -15,6 +15,8 @@ type SendMessageCallback = (status: {
 }) => void;
 
 export function initSocket(io: Server) {
+  const onlineUsers = new Map<number, Set<string>>();
+
   // Auth middleware
   io.use((socket: Socket, next) => {
     try {
@@ -46,8 +48,33 @@ export function initSocket(io: Server) {
 
   // Connection handler
   io.on("connection", (socket: Socket) => {
-    const userId = socket.data.userId as number;
-    console.log("Socket connected:", socket.id);
+    const userId = Number(socket.data.userId);
+    if (isNaN(userId)) {
+      return socket.disconnect();
+    }
+
+    const alreadyOnline = onlineUsers.has(userId);
+    let sockets = onlineUsers.get(userId);
+
+    if (!sockets) {
+      sockets = new Set<string>();
+      onlineUsers.set(userId, sockets);
+    }
+
+    sockets.add(socket.id);
+
+    const isFirstConnection = !alreadyOnline;
+
+    // snapshot (only on connect ==> presence init per socket)
+    const allOnline = Array.from(onlineUsers.keys());
+    socket.emit("online_users_snapshot", {
+      users: allOnline,
+    });
+
+    // notify others only when user becomes online (first socket ever)
+    if (isFirstConnection) {
+      io.emit("user_online", { userId });
+    }
 
     // JOIN ROOM (with access control)
     socket.on("join_conversation", async (conversationId: number) => {
@@ -126,9 +153,38 @@ export function initSocket(io: Server) {
       if (typeof conversationId !== "number") return;
       socket.leave(`conversation_${conversationId}`);
     });
+    
+    // TYPING STATUS
+    socket.on("typing_status", async (data: { conversationId: number; isTyping: boolean }) => {
+      try {
+        if (typeof data.conversationId !== "number") return;
+        
+        const membership = await isMember(userId, data.conversationId);
+        if (!membership) return;
+        
+        socket.to(`conversation_${data.conversationId}`).emit("user_typing_status", {
+          userId,
+          conversationId: data.conversationId,
+          isTyping: data.isTyping
+        });
+      } catch (err) {
+        console.error("typing_status error:", err);
+      }
+    });
 
     socket.on("disconnect", () => {
-      console.log("Socket disconnected:", socket.id);
+      const userId = Number(socket.data.userId);
+      const sockets = onlineUsers.get(userId);
+
+      if (!sockets) return;
+
+      sockets.delete(socket.id);
+
+      // only mark offline if no other tabs exist
+      if (sockets.size === 0) {
+        onlineUsers.delete(userId);
+        io.emit("user_offline", { userId });
+      }
     });
 
     socket.on("error", (err) => {

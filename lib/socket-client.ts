@@ -1,4 +1,5 @@
 import { io, Socket } from "socket.io-client";
+import { initPresenceListeners } from "./presence-listeners";
 
 let socket: Socket | null = null;
 
@@ -10,6 +11,9 @@ export const getSocket = () => {
       autoConnect: true,
     });
 
+    // Initialize presence listeners
+    initPresenceListeners();
+
     socket.on("connect", () => {
       console.log("Global Socket Connected");
     });
@@ -19,4 +23,11 @@ export const getSocket = () => {
     });
   }
   return socket;
+};
+
+export const disconnectSocket = () => {
+  if (socket) {
+    socket.disconnect();
+    socket = null;
+  }
 };
