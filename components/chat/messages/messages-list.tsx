@@ -44,7 +44,7 @@ export function MessagesList({ userId }: Props) {
 
   if (typedMessages?.length === 0) {
     return (
-      <ChatLayout userId={userId} onSend={handleSend}>
+      <ChatLayout userId={userId} conversationId={Number(conversationId)} onSend={handleSend}>
         <div className="flex flex-col h-full w-full items-center justify-center gap-2">
           <p className="text-sm font-semibold">{t("no_messages")}</p>
         </div>
@@ -53,7 +53,7 @@ export function MessagesList({ userId }: Props) {
   }
 
   return (
-    <ChatLayout userId={userId} onSend={handleSend}>
+    <ChatLayout userId={userId} conversationId={Number(conversationId)} onSend={handleSend}>
       <div
         ref={containerRef}
         className="flex flex-col gap-2 overflow-y-auto py-4 pe-2"
