@@ -47,7 +47,10 @@
     "select_conversation": "اختر محادثة...",
     "online": "متصل",
     "offline": "غير متصل",
-    "typing": "يكتب..."
+    "typing": "يكتب...",
+    "load_more": "تحميل المزيد",
+    "loading_more": "جارٍ التحميل...",
+    "scroll_to_bottom": "الرجوع للأسفل"
   },
   "users": {
     "no_users": "لا يوجد مستخدمين",
