@@ -68,7 +68,10 @@
     "socket_initialized": "Socket.IO server initialized",
     "socket_not_initialized": "Failed to initialize Socket.IO server",
     "invalid_message_content": "Invalid message content",
-    "message_sent_successfully": "Message sent successfully"
+    "message_sent_successfully": "Message sent successfully",
+    "unread_counts_fetched_successfully": "Unread counts fetched successfully",
+    "messages_marked_as_read_successfully": "Messages marked as read successfully",
+    "conversation_id_required": "Conversation id is required"
   },
   "auth": {
     "login": "Login",
