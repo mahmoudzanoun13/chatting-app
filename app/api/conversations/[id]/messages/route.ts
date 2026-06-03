@@ -27,10 +27,10 @@ export async function GET(req: NextRequest, { params }: Params) {
     const page = parseInt(req.nextUrl.searchParams.get("page") ?? "1", 10);
     const skip = (page - 1) * limit;
 
-    // Fetch messages
+    // Fetch messages (latest first)
     const messages = await prisma.message.findMany({
       where: { conversationId },
-      orderBy: { createdAt: "asc" },
+      orderBy: { createdAt: "desc" },
       skip,
       take: limit,
       include: {
@@ -55,7 +55,8 @@ export async function GET(req: NextRequest, { params }: Params) {
       data: { read: true },
     });
 
-    return jsonResponse(true, messages, "messages_fetched_successfully", {}, 200);
+    // Return messages in chronological order (oldest to newest) for the UI
+    return jsonResponse(true, messages.reverse(), "messages_fetched_successfully", {}, 200);
   } catch (err) {
     console.error(err);
     return jsonResponse(false, null, "internal_server_error", {}, 500);
