@@ -1,7 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { messagesQuery } from "@/hooks/queries/messages/messages";
+import { useQueryClient, InfiniteData } from "@tanstack/react-query";
 import { MessageWithSender, createOptimisticMessage } from "../utils/message-utils";
 import { UserModel } from "@/generated/prisma/models/User";
+import { infiniteMessagesOptions } from "@/hooks/queries/messages/messages";
 import { Socket } from "socket.io-client";
 
 export function useSendMessage(
@@ -18,15 +18,22 @@ export function useSendMessage(
 
     const optimisticMessage = createOptimisticMessage({
       text,
-      conversationId,
+      conversationId: Number(conversationId),
       user,
       tempId,
     });
 
+    const queryKey = infiniteMessagesOptions(Number(conversationId)).queryKey;
+
     // 1. Optimistic update
-    queryClient.setQueryData(
-      messagesQuery(Number(conversationId)).queryKey,
-      (old: MessageWithSender[] = []) => [...old, optimisticMessage]
+    queryClient.setQueryData<InfiniteData<MessageWithSender[]>>(
+      queryKey,
+      (old) => {
+        if (!old) return old;
+        const newPages = [...old.pages];
+        newPages[0] = [...newPages[0], optimisticMessage];
+        return { ...old, pages: newPages };
+      }
     );
 
     // 2. Emit socket event
@@ -40,10 +47,15 @@ export function useSendMessage(
       (res: { success: boolean; messageId?: number }) => {
         if (!res.success) {
           // 3. Rollback on failure
-          queryClient.setQueryData(
-            messagesQuery(Number(conversationId)).queryKey,
-            (old: MessageWithSender[] = []) =>
-              old.filter((m) => m.id !== tempId)
+          queryClient.setQueryData<InfiniteData<MessageWithSender[]>>(
+            queryKey,
+            (old) => {
+              if (!old) return old;
+              const newPages = old.pages.map((page) =>
+                page.filter((m) => m.id !== tempId)
+              );
+              return { ...old, pages: newPages };
+            }
           );
         }
       }
