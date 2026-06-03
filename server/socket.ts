@@ -62,6 +62,7 @@ export function initSocket(io: Server) {
     }
 
     sockets.add(socket.id);
+    socket.join(`user_${userId}`);
 
     const isFirstConnection = !alreadyOnline;
 
@@ -138,6 +139,18 @@ export function initSocket(io: Server) {
           io.to(`conversation_${data.conversationId}`).emit("receive_message", {
             ...message,
             clientTempId: data.clientTempId,
+          });
+
+          // Notify the other participant if they are not in the room
+          const otherUserId = membership.user1Id === userId ? membership.user2Id : membership.user1Id;
+          io.to(`user_${otherUserId}`).emit("new_notification", {
+            conversationId: data.conversationId,
+            message: {
+              id: message.id,
+              content: message.content,
+              senderId: message.senderId,
+              createdAt: message.createdAt,
+            }
           });
 
           callback({ success: true, messageId: message.id });

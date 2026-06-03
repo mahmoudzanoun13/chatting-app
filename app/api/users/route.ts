@@ -23,13 +23,37 @@ export async function GET(req: NextRequest) {
         email: true,
         avatar: true,
         createdAt: true,
+        conversations1: {
+          where: {
+            user2Id: auth.userId,
+          },
+          select: { id: true },
+        },
+        conversations2: {
+          where: {
+            user1Id: auth.userId,
+          },
+          select: { id: true },
+        },
       },
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    return jsonResponse(true, users, "users_fetched_successfully", {}, 200);
+    const transformedUsers = users.map((user) => {
+      const conversation = user.conversations1[0] || user.conversations2[0];
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        createdAt: user.createdAt,
+        conversationId: conversation?.id,
+      };
+    });
+
+    return jsonResponse(true, transformedUsers, "users_fetched_successfully", {}, 200);
   } catch (err) {
     console.error(err);
     return jsonResponse(false, null, "internal_server_error", {}, 500);
