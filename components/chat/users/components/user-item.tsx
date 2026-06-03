@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { memo } from "react";
 import { usePresenceStore } from "@/stores/presence-store";
 import { useNotificationStore } from "@/stores/notification-store";
+import { cn } from "@/lib/utils";
 
 interface UserItemProps {
   user: ChatUser & { conversationId?: number };
@@ -15,12 +16,18 @@ interface UserItemProps {
 const UserItem = memo(function UserItem({ user }: UserItemProps) {
   const isOnline = usePresenceStore((state) => state.isOnline(Number(user.id)));
   const unreadCount = useNotificationStore((state) => state.unreadCounts[user.conversationId ?? -1] || 0);
+  const activeConversationId = useNotificationStore((state) => state.activeConversationId);
+
+  const isActive = activeConversationId === user.conversationId;
 
   const displayInitial = user?.name?.charAt(0).toUpperCase() ?? "";
   return (
     <Link
       href={`/chat/${user.id}`}
-      className="flex items-center gap-2 rounded-xl p-2 hover:bg-muted"
+      className={cn(
+        "flex items-center gap-2 rounded-xl p-2 hover:bg-muted transition-colors",
+        isActive && "bg-muted"
+      )}
     >
       <div className="flex items-center gap-2 flex-1 min-w-0">
         <div className="relative">
@@ -37,7 +44,11 @@ const UserItem = memo(function UserItem({ user }: UserItemProps) {
             <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-background bg-green-500" />
           )}
         </div>
-        <span className="font-bold truncate">{user?.name ?? "User"}</span>
+        <span
+          className="font-bold truncate"
+          title={user?.name}>
+          {user?.name ?? "User"}
+        </span>
       </div>
 
       {unreadCount > 0 && (
