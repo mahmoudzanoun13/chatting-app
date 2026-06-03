@@ -131,8 +131,6 @@ NEXT_PUBLIC_SOCKET_URL="http://localhost:3001"
 
 ## Future Improvements
 
-- **Message Pagination**: Load more historical messages (Infinite Scroll).
-- **UX**: "Scroll to Bottom" button for quickly jumping to latest messages.
 - **Search**: Search for specific messages or users.
 - **Multi-user group chats**: Conversations with 3+ participants.
 - **File/image sharing**: Sending attachments in real-time.

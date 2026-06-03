@@ -73,7 +73,7 @@ To provide a "premium" feel, the app uses **Optimistic Updates**:
 1. When a user sends a message, it is immediately added to the UI with a negative `tempId`.
 2. This `tempId` is sent as `clientTempId` to the server.
 3. The server broadcasts the message back to **everyone**, including the sender, with the same `clientTempId`.
-4. The sender's client sees the `clientTempId` and **replaces** the optimistic message with the permanent DB entry, preventing duplication.
+4. The sender's client sees the `clientTempId` and **replaces** the optimistic message with the permanent DB entry within the **TanStack Infinite Query** cache, preventing duplication.
 
 ## 🛠️ Running the Server
 
