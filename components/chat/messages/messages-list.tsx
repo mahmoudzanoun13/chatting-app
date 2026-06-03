@@ -11,6 +11,9 @@ import { MessagesListSkeleton } from "./messages-list-skeleton";
 import { MessageModel } from "@/generated/prisma/models/Message";
 import { UserModel } from "@/generated/prisma/models/User";
 import ChatLayout from "./components/chat-layout";
+import { useMarkAsRead } from "@/hooks/mutations/notifications/use-mark-as-read";
+import { useNotificationStore } from "@/stores/notification-store";
+import { useEffect } from "react";
 
 export type MessageWithSender = MessageModel & {
   sender: Pick<UserModel, "id" | "name" | "email" | "avatar">;
@@ -37,6 +40,23 @@ export function MessagesList({ userId }: Props) {
   const { containerRef, bottomRef } = useAutoScroll({
     dependency: messages,
   });
+
+  const clearUnread = useNotificationStore((state) => state.clearUnread);
+  const setActiveConversationId = useNotificationStore((state) => state.setActiveConversationId);
+  const { mutate: markAsRead } = useMarkAsRead();
+
+  useEffect(() => {
+    if (conversationId) {
+      const id = Number(conversationId);
+      clearUnread(id);
+      markAsRead(id);
+      setActiveConversationId(id);
+
+      return () => {
+        setActiveConversationId(null);
+      };
+    }
+  }, [conversationId, clearUnread, markAsRead, setActiveConversationId]);
 
   if (isLoading) {
     return <MessagesListSkeleton />

@@ -43,6 +43,19 @@ Authentication is handled via the same JWT token used by the Next.js app:
 | `online_users_snapshot` | `users: number[]`                               | Sends a list of all online user IDs upon connection. |
 | `user_online`           | `userId: number`                                | Broadcasts when a user comes online.                 |
 | `user_offline`          | `userId: number`                                | Broadcasts when a user goes offline.                 |
+| `new_notification`      | `{ conversationId, message: { id, content } }`  | Sent to the specific user's room for new messages.   |
+
+## 🔔 Notifications & Rooms
+
+The server utilizes specific room patterns for targeted communication:
+
+1.  **Conversation Rooms**: `conversation_${id}` - Used for broadcasting messages and typing indicators to all participants currently viewing the chat.
+2.  **User Rooms**: `user_${userId}` - Every user joins their own private room on connection. This is used for delivering notifications when the user is NOT actively viewing a specific conversation.
+
+When a message is sent:
+
+- It is broadcast to the `conversation_${id}` room.
+- A `new_notification` event is sent to the **other** participant's `user_${userId}` room. The client then decides whether to show a badge, play a sound, or ignore it based on their current focus.
 
 ## 🟢 Presence Tracking
 

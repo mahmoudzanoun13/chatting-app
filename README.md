@@ -19,7 +19,9 @@ A modern, high-performance chatting application built with Next.js 16+, React 19
 - **Optimistic Updates**: Instant UI feedback with server-side deduplication.
 - **Presence Tracking**: Real-time online/offline status indicators.
 - **Typing Indicators**: Live "Typing..." feedback during conversations.
-- **Rate Limiting**: IP-based rate limiting on reset password auth endpoint (local memory not Redis for now).
+- **Real-time Notifications**: Instant message alerts and unread badges.
+- **Audio Alerts**: Custom notification sounds for background messages.
+- **Rate Limiting**: IP-based rate limiting on reset password auth endpoint.
 - **Data Fetching**: Efficient server state management and caching with [TanStack Query](https://tanstack.com/query) v5.
 - **State Management**: Robust local and global state powered by [Zustand](https://zustand-demo.pmnd.rs/).
 - **Code Quality**: Enforced best practices with ESLint and specialized plugins.
@@ -154,16 +156,15 @@ The application uses Prisma with PostgreSQL. Key models include:
 ├── components/            # Reusable UI and feature components
 ├── lib/                   # Shared utilities
 │   ├── auth.ts            # JWT signing/verification & cookie helpers
+│   ├── query-client.ts    # Shared TanStack Query instance
+│   ├── audio.ts           # Audio notification system
+│   ├── presence-listeners.ts # Global socket event hub
 │   ├── token.ts           # Reset-token generation & validation
 │   ├── mailer.ts          # Nodemailer transactional email helper
 │   ├── rate-limit.ts      # IP-based rate limiter
-│   ├── api-response.ts    # Standardised JSON response helpers
-│   └── i18n-zod.ts        # Shared Zod translator type for server-side validation
-├── schemas/               # Shared Zod validation schemas (login, register, reset/set-password)
-├── messages/              # Localisation files (en, ar)
-├── prisma/                # Database schema, migrations, and seed scripts
-├── stores/                # Zustand global state stores
-└── public/                # Static assets
+│   └── api-response.ts    # Standardised JSON response helpers
+├── stores/                # Zustand global state stores (presence, typing, notifications)
+└── public/                # Static assets (sounds, icons)
 ```
 
 ## 📜 Scripts

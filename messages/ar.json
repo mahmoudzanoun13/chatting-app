@@ -68,7 +68,10 @@
     "socket_initialized": "تم تهيئة خادم Socket.IO",
     "socket_not_initialized": "فشل تهيئة خادم Socket.IO",
     "invalid_message_content": "محتوى الرسالة غير صالح",
-    "message_sent_successfully": "تم إرسال الرسالة بنجاح"
+    "message_sent_successfully": "تم إرسال الرسالة بنجاح",
+    "unread_counts_fetched_successfully": "تم جلب عدد الرسائل غير المقروءة بنجاح",
+    "messages_marked_as_read_successfully": "تم وضع علامة على الرسائل كمقروءة بنجاح",
+    "conversation_id_required": "معرف المحادثة مطلوب"
   },
   "auth": {
     "login": "تسجيل الدخول",
