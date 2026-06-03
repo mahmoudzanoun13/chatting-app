@@ -1,7 +1,6 @@
-import { queryOptions } from "@tanstack/react-query";
 import type { MessageWithSender } from "@/components/chat/messages/messages-list";
 
-async function fetchMessages(conversationId: number, page: number = 1, limit: number = 20): Promise<MessageWithSender[]> {
+export async function fetchMessages(conversationId: number, page: number = 1, limit: number = 20): Promise<MessageWithSender[]> {
   const res = await fetch(`/api/conversations/${conversationId}/messages?limit=${limit}&page=${page}`, {
     credentials: "include",
   });
@@ -10,9 +9,13 @@ async function fetchMessages(conversationId: number, page: number = 1, limit: nu
   return result.data as MessageWithSender[];
 }
 
-export const messagesQuery = (conversationId: number) =>
-  queryOptions<MessageWithSender[]>({
-    queryKey: ["messages", conversationId],
-    queryFn: () => fetchMessages(conversationId),
-    enabled: !!conversationId,
-  });
+
+export const infiniteMessagesOptions = (conversationId: number) => ({
+  queryKey: ["messages", conversationId],
+  queryFn: ({ pageParam = 1 }) => fetchMessages(conversationId, Number(pageParam)),
+  initialPageParam: 1,
+  getNextPageParam: (lastPage: MessageWithSender[], allPages: MessageWithSender[][]) => {
+    return lastPage.length === 20 ? allPages.length + 1 : undefined;
+  },
+  enabled: !!conversationId,
+});

@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { conversationByUserQuery } from "@/hooks/queries/conversations/by-user";
-import { messagesQuery } from "@/hooks/queries/messages/messages";
+import { infiniteMessagesOptions } from "@/hooks/queries/messages/messages";
 import { useCurrentAuth } from "@/hooks/queries/auth/use-current-auth";
 import { useMemo } from "react";
-import { getSenderType, MessageWithSender } from "../utils/message-utils";
+import { getSenderType } from "../utils/message-utils";
 
 export function useConversationMessages(userId: string) {
   const { data: user } = useCurrentAuth();
@@ -12,9 +12,19 @@ export function useConversationMessages(userId: string) {
     conversationByUserQuery(userId)
   );
 
-  const { data: messages = [], isLoading: isMsgLoading } = useQuery<MessageWithSender[]>(
-    messagesQuery(Number(conversationId))
-  );
+  const {
+    data: infiniteData,
+    isLoading: isMsgLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(infiniteMessagesOptions(Number(conversationId)));
+
+  // Flatten messages from all pages (reverse pages so oldest is first, then newest)
+  const messages = useMemo(() => {
+    if (!infiniteData?.pages) return [];
+    return [...infiniteData.pages].reverse().flat();
+  }, [infiniteData]);
 
   const typedMessages = useMemo(() => {
     if (!user) return [];
@@ -30,5 +40,8 @@ export function useConversationMessages(userId: string) {
     messages,
     typedMessages,
     isLoading: isConvLoading || isMsgLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   };
 }

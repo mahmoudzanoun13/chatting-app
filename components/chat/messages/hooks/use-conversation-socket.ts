@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, InfiniteData } from "@tanstack/react-query";
 import { useSocket } from "@/hooks/socket/use-socket";
-import { messagesQuery } from "@/hooks/queries/messages/messages";
+import { infiniteMessagesOptions } from "@/hooks/queries/messages/messages";
 import { MessageWithSender } from "../utils/message-utils";
 import { UserModel } from "@/generated/prisma/models/User";
 
@@ -16,26 +16,36 @@ export function useConversationSocket(
     if (!socket || !user || !conversationId) return;
 
     const handleIncomingMessage = (msg: MessageWithSender & { clientTempId?: number }) => {
-      queryClient.setQueryData(
-        messagesQuery(Number(conversationId)).queryKey,
-        (old: MessageWithSender[] = []) => {
-          // 1. Check if we already have this message by DB ID
-          const existsById = old.some((m) => m.id === msg.id);
-          if (existsById) return old;
+      const queryKey = infiniteMessagesOptions(Number(conversationId)).queryKey;
+      queryClient.setQueryData<InfiniteData<MessageWithSender[]>>(
+        queryKey,
+        (old) => {
+          if (!old) return old;
 
-          // 2. Check if this is a broadcast of a message we sent optimistically
+          // 1. Check if we already have this message in any page
+          const alreadyExists = old.pages.some((page) =>
+            page.some((m) => m.id === msg.id)
+          );
+          if (alreadyExists) return old;
+
+          const newPages = [...old.pages];
+          const firstPage = [...newPages[0]];
+
+          // 2. Check if this is a broadcast of an optimistic message
           if (msg.clientTempId) {
-            const tempIndex = old.findIndex((m) => m.id === msg.clientTempId);
+            const tempIndex = firstPage.findIndex((m) => m.id === msg.clientTempId);
             if (tempIndex !== -1) {
               // Replace optimistic message with real one
-              const newMessages = [...old];
-              newMessages[tempIndex] = msg;
-              return newMessages;
+              firstPage[tempIndex] = msg;
+              newPages[0] = firstPage;
+              return { ...old, pages: newPages };
             }
           }
 
-          // 3. Add new message to list
-          return [...old, msg];
+          // 3. Append to the first page (latest messages)
+          firstPage.push(msg);
+          newPages[0] = firstPage;
+          return { ...old, pages: newPages };
         }
       );
     };

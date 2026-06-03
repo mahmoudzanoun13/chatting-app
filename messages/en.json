@@ -47,7 +47,10 @@
     "select_conversation": "Select a conversation...",
     "online": "Online",
     "offline": "Offline",
-    "typing": "Typing..."
+    "typing": "Typing...",
+    "load_more": "Load More",
+    "loading_more": "Loading...",
+    "scroll_to_bottom": "Scroll to bottom"
   },
   "users": {
     "no_users": "No users found",
