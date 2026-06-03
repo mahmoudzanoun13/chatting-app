@@ -77,14 +77,16 @@ PostgreSQL DB
 
 - One-to-one conversations
 - Real-time message delivery via Socket.IO
-- Online/offline user status
-- Notifications for new messages
+- Online/offline user status tracking
+- Presence-aware notifications (sound & badges)
+- Real-time typing indicators
+- Multi-tab synchronization (Zustand + TanStack Query)
 
 **Frontend**
 
-- `/chat` → list all users and select a conversation
-- `/chat/:id` → chat view for specific conversation
-- Notifications & online users managed globally with Zustand
+- `/chat` → list all users with real-time status and unread badges
+- `/chat/:id` → chat view with auto-scroll and mark-as-read logic
+- Notifications & typing state managed globally with Zustand
 
 ## Database Schema
 
@@ -95,10 +97,10 @@ id | name | email | password_hash | avatar | created_at
 id | user1_id | user2_id | created_at
 
 **Messages**  
-id | conversation_id | sender_id | content | created_at | read_status
+id | conversation_id | sender_id | content | created_at | read (boolean)
 
 **ResetTokens**  
-id | user_id | token | expires_at
+id | user_id | token | expires_at | used (boolean)
 
 ## Getting Started
 
@@ -110,11 +112,12 @@ id | user_id | token | expires_at
    bun install
 
 3. Set up Prisma:  
-   bun prisma generate  
-   bun prisma migrate dev --name init
+   bun db:migrate
+   bun db:seed
 
 4. Run the development server:  
    bun dev
+   bun dev:server
 
 ## Environment Variables
 
@@ -124,9 +127,13 @@ DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/chatting_app"
 JWT_SECRET="your_super_secret_key"  
 GOOGLE_CLIENT_ID="your_google_client_id"  
 GOOGLE_CLIENT_SECRET="your_google_client_secret"
+NEXT_PUBLIC_SOCKET_URL="http://localhost:3001"
 
 ## Future Improvements
 
-- Multi-user group chats
-- File/image sharing
-- Message reactions (likes, emojis)
+- **Message Pagination**: Load more historical messages (Infinite Scroll).
+- **UX**: "Scroll to Bottom" button for quickly jumping to latest messages.
+- **Search**: Search for specific messages or users.
+- **Multi-user group chats**: Conversations with 3+ participants.
+- **File/image sharing**: Sending attachments in real-time.
+- **Message reactions**: Likes and emoji responses.
